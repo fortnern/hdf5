@@ -984,6 +984,7 @@
 ./src/H5Pdapl.c
 ./src/H5Pdcpl.c
 ./src/H5Pdeprec.c
+./src/H5Pdevelop.h
 ./src/H5Pdxpl.c
 ./src/H5Pencdec.c
 ./src/H5Pfapl.c
@@ -2992,6 +2993,7 @@
 # test utilities
 ./utils/test/Makefile.am
 ./utils/test/swmr_check_compat_vfd.c
+./utils/test/vds_elink_compat_vol.c
 
 # high level libraries
 ./hl/Makefile.am

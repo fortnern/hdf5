@@ -168,5 +168,10 @@ public class TestH5VL {
     public void testH5VLunregister_connector_NegativeID() throws Throwable {
         H5.H5VLunregister_connector(-1);
     }
+
+    @Test(expected = HDF5LibraryException.class)
+    public void testH5VLfapl_is_native() throws Throwable {
+        H5.H5VLfapl_is_native(-1);
+    }
 }
 

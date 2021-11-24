@@ -16676,15 +16676,25 @@ error:
 static int
 obj_exists(hid_t fapl, hbool_t new_format)
 {
-    char   filename[NAME_BUF_SIZE]; /* Buffer for file name */
-    hid_t  fid = -1;                /* File ID */
-    hid_t  gid = -1;                /* Group ID */
-    herr_t status;                  /* Generic return value */
+    char    filename[NAME_BUF_SIZE]; /* Buffer for file name */
+    hid_t   fid = -1;                /* File ID */
+    hid_t   gid = -1;                /* Group ID */
+    hbool_t is_native;               /* Whether native VOL connector is being used */
+    herr_t  status;                  /* Generic return value */
 
     if (new_format)
         TESTING("object exists (w/new group format)")
     else
         TESTING("object exists")
+
+    /* Check for operating with native (only) VOL connector */
+    is_native = FALSE;
+    if (H5VL_fapl_is_native(fapl, &is_native) < 0)
+        TEST_ERROR;
+
+    /* Note that some testing will be skipped with non-native VOL connectors */
+    if (!is_native)
+        HDputs("    Tests involving external links skipped - not using native VOL connector");
 
     /* Set up filename and create file*/
     h5_fixname(FILENAME[0], fapl, filename, sizeof filename);
@@ -16778,8 +16788,10 @@ obj_exists(hid_t fapl, hbool_t new_format)
         TEST_ERROR
 
     /* Verify that H5Oexists_by_name() returns TRUE for external link in root group that points to object */
-    if (TRUE != H5Oexists_by_name(fid, "external3", H5P_DEFAULT))
-        TEST_ERROR
+    if (is_native) {
+        if (TRUE != H5Oexists_by_name(fid, "external3", H5P_DEFAULT))
+            TEST_ERROR
+    }
 
     /* Create dangling (file doesn't exist) external link in non-root group */
     if (H5Lcreate_external("nofile", "dangle", fid, "group/external1", H5P_DEFAULT, H5P_DEFAULT) < 0)
@@ -16805,8 +16817,10 @@ obj_exists(hid_t fapl, hbool_t new_format)
 
     /* Verify that H5Oexists_by_name() returns TRUE for external link in non-root group that points to object
      */
-    if (TRUE != H5Oexists_by_name(fid, "group/external3", H5P_DEFAULT))
-        TEST_ERROR
+    if (is_native) {
+        if (TRUE != H5Oexists_by_name(fid, "group/external3", H5P_DEFAULT))
+            TEST_ERROR
+    }
 
     /* Soft->External links */
     /* Create soft-link in root group that points to dangling (file doesn't exist) external link */
@@ -16830,8 +16844,10 @@ obj_exists(hid_t fapl, hbool_t new_format)
         FAIL_STACK_ERROR
 
     /* Verify that H5Oexists_by_name() returns TRUE */
-    if (TRUE != H5Oexists_by_name(fid, "soft-elink3", H5P_DEFAULT))
-        TEST_ERROR
+    if (is_native) {
+        if (TRUE != H5Oexists_by_name(fid, "soft-elink3", H5P_DEFAULT))
+            TEST_ERROR
+    }
 
     /* Create soft-link in root group that points to dangling (file doesn't exist) external link in non-root
      * group */
@@ -16856,8 +16872,10 @@ obj_exists(hid_t fapl, hbool_t new_format)
         FAIL_STACK_ERROR
 
     /* Verify that H5Oexists_by_name() returns TRUE */
-    if (TRUE != H5Oexists_by_name(fid, "soft-elink6", H5P_DEFAULT))
-        TEST_ERROR
+    if (is_native) {
+        if (TRUE != H5Oexists_by_name(fid, "soft-elink6", H5P_DEFAULT))
+            TEST_ERROR
+    }
 
     /* Create soft-link in non-root group that points to dangling (file doesn't exist) external link */
     if (H5Lcreate_soft("/external1", fid, "group/soft-elink1", H5P_DEFAULT, H5P_DEFAULT) < 0)
@@ -16880,8 +16898,10 @@ obj_exists(hid_t fapl, hbool_t new_format)
         FAIL_STACK_ERROR
 
     /* Verify that H5Oexists_by_name() returns TRUE */
-    if (TRUE != H5Oexists_by_name(fid, "group/soft-elink3", H5P_DEFAULT))
-        TEST_ERROR
+    if (is_native) {
+        if (TRUE != H5Oexists_by_name(fid, "group/soft-elink3", H5P_DEFAULT))
+            TEST_ERROR
+    }
 
     /* Create soft-link in non-root group that points to dangling (file doesn't exist) external link in
      * non-root group */
@@ -16907,8 +16927,10 @@ obj_exists(hid_t fapl, hbool_t new_format)
         FAIL_STACK_ERROR
 
     /* Verify that H5Oexists_by_name() returns TRUE */
-    if (TRUE != H5Oexists_by_name(fid, "group/soft-elink6", H5P_DEFAULT))
-        TEST_ERROR
+    if (is_native) {
+        if (TRUE != H5Oexists_by_name(fid, "group/soft-elink6", H5P_DEFAULT))
+            TEST_ERROR
+    }
 
     /* External->Soft links */
     /* Create external link in root group that points to dangling soft link in root group */
@@ -16924,8 +16946,10 @@ obj_exists(hid_t fapl, hbool_t new_format)
         TEST_ERROR
 
     /* Verify that H5Oexists_by_name() returns TRUE */
-    if (TRUE != H5Oexists_by_name(fid, "elink-soft2", H5P_DEFAULT))
-        TEST_ERROR
+    if (is_native) {
+        if (TRUE != H5Oexists_by_name(fid, "elink-soft2", H5P_DEFAULT))
+            TEST_ERROR
+    }
 
     /* Create external link in root group that points to dangling soft link in non-root group */
     if (H5Lcreate_external(filename, "group/soft1", fid, "elink-soft3", H5P_DEFAULT, H5P_DEFAULT) < 0)
@@ -16940,8 +16964,10 @@ obj_exists(hid_t fapl, hbool_t new_format)
         TEST_ERROR
 
     /* Verify that H5Oexists_by_name() returns TRUE */
-    if (TRUE != H5Oexists_by_name(fid, "elink-soft4", H5P_DEFAULT))
-        TEST_ERROR
+    if (is_native) {
+        if (TRUE != H5Oexists_by_name(fid, "elink-soft4", H5P_DEFAULT))
+            TEST_ERROR
+    }
 
     /* Create external link in non-root group that points to dangling soft link in root group */
     if (H5Lcreate_external(filename, "soft1", fid, "group/elink-soft1", H5P_DEFAULT, H5P_DEFAULT) < 0)
@@ -16956,8 +16982,10 @@ obj_exists(hid_t fapl, hbool_t new_format)
         TEST_ERROR
 
     /* Verify that H5Oexists_by_name() returns TRUE */
-    if (TRUE != H5Oexists_by_name(fid, "group/elink-soft2", H5P_DEFAULT))
-        TEST_ERROR
+    if (is_native) {
+        if (TRUE != H5Oexists_by_name(fid, "group/elink-soft2", H5P_DEFAULT))
+            TEST_ERROR
+    }
 
     /* Create external link in non-root group that points to dangling soft link in non-root group */
     if (H5Lcreate_external(filename, "group/soft1", fid, "group/elink-soft3", H5P_DEFAULT, H5P_DEFAULT) < 0)
@@ -16973,8 +17001,10 @@ obj_exists(hid_t fapl, hbool_t new_format)
         TEST_ERROR
 
     /* Verify that H5Oexists_by_name() returns TRUE */
-    if (TRUE != H5Oexists_by_name(fid, "group/elink-soft4", H5P_DEFAULT))
-        TEST_ERROR
+    if (is_native) {
+        if (TRUE != H5Oexists_by_name(fid, "group/elink-soft4", H5P_DEFAULT))
+            TEST_ERROR
+    }
 
     /* Close file created */
     if (H5Fclose(fid) < 0)
@@ -22578,7 +22608,8 @@ main(void)
         }
 
         for (new_format = FALSE; new_format <= TRUE; new_format++) {
-            hid_t my_fapl;
+            hid_t   my_fapl;
+            hbool_t is_native; /* Whether native VOL connector is being used */
 
             /* Check for FAPL to use */
             if (new_format) {
@@ -22618,9 +22649,21 @@ main(void)
             nerrors += test_deprec(my_fapl, new_format);
 #endif /* H5_NO_DEPRECATED_SYMBOLS */
 
-            /* Skip external link tests for splitter VFD, which has external link-related bugs */
-            if (HDstrcmp(env_h5_drvr, "splitter")) {
+            /* Check for operating with native (only) VOL connector */
+            is_native = FALSE;
+            if (H5VL_fapl_is_native(my_fapl, &is_native) < 0)
+                TEST_ERROR;
 
+            /* Skip tests external link tests when using non-native VOL connectors */
+            if (!is_native || 0 == HDstrcmp(env_h5_drvr, "splitter")) {
+                HDputs("    External link tests skipped - not using native VOL connector, or using splitter "
+                       "VFD");
+            }
+            else if (HDstrcmp(env_h5_drvr, "splitter") == 0) {
+                HDputs("    External link tests skipped - splitter VFD does not currently support external "
+                       "links");
+            }
+            else {
                 /* tests for external link */
                 /* Test external file cache first, so it sees the default efc setting on the fapl
                  */
@@ -22672,7 +22715,10 @@ main(void)
                     nerrors += external_link_closing_deprec(my_fapl, new_format) < 0 ? 1 : 0;
 #endif /* H5_NO_DEPRECATED_SYMBOLS */
 
-                    if (!driver_uses_modified_filename) {
+                    if (driver_uses_modified_filename) {
+                        HDputs("    external_link_endian() test skipped - driver uses modified filename");
+                    }
+                    else {
                         nerrors += external_link_endian(new_format) < 0 ? 1 : 0;
                     }
 
@@ -22687,7 +22733,10 @@ main(void)
                     nerrors += external_link_reltar(my_fapl, new_format) < 0 ? 1 : 0;
                     nerrors += external_link_chdir(my_fapl, new_format) < 0 ? 1 : 0;
 
-                    if (!driver_uses_modified_filename) {
+                    if (driver_uses_modified_filename) {
+                        HDputs("    external_set_elink_fapl1() test skipped - driver uses modified filename");
+                    }
+                    else {
                         nerrors += external_set_elink_fapl1(my_fapl, new_format) < 0 ? 1 : 0;
                     }
 
