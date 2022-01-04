@@ -262,10 +262,10 @@ done:
  *-------------------------------------------------------------------------
  */
 herr_t
-H5ESget_requests(hid_t es_id, H5_iter_order_t order, hid_t *connector_ids, void **requests, size_t *count/*out*/)
+H5ESget_requests(hid_t es_id, H5_iter_order_t order, hid_t *connector_ids, void **requests, size_t *count /*out*/)
 {
-    H5ES_t *es;                         /* Event set */
-    herr_t ret_value = SUCCEED;         /* Return value */
+    H5ES_t *es;                  /* Event set */
+    herr_t  ret_value = SUCCEED; /* Return value */
 
     FUNC_ENTER_API(FAIL)
     H5TRACE5("e", "iIo*i**xx", es_id, order, connector_ids, requests, count);
