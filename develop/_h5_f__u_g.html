@@ -1,12 +1,13 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.7"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>HDF5: The HDF5 File</title>
+<title>HDF5: HDF5 File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript">var page_layout=1;</script>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
 <link href="navtree.css" rel="stylesheet" type="text/css"/>
@@ -22,37 +23,24 @@
 /* @license-end */
 </script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="hdf5doxy.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
 <link href="hdf5doxy.css" rel="stylesheet" type="text/css">
-<!-- <link href="hdf5doxy.css" rel="stylesheet" type="text/css"/>
- -->
 <script type="text/javascript" src="hdf5_navtree_hacks.js"></script>
+<div style="background:#FFDDDD;font-size:120%;text-align:center;margin:0;padding:5px">Please, help us to better serve our user community by answering the following short survey:  <a href="https://www.hdfgroup.org/website-survey/">https://www.hdfgroup.org/website-survey/</a></div>
 </head>
 <body>
-<div style="background:#FFDDDD;font-size:120%;text-align:center;margin:0;padding:5px">Please, help us to better serve our user community by answering the following short survey:  <a href="https://www.hdfgroup.org/website-survey/">https://www.hdfgroup.org/website-survey/</a></div>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
 <div id="titlearea">
 <table cellspacing="0" cellpadding="0">
  <tbody>
- <tr style="height: 56px;">
+ <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="HDFG-logo.png"/></td>
-  <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname"><a href="https://www.hdfgroup.org">HDF5</a>
-   &#160;<span id="projectnumber">1.15.0.603f8b1</span>
+  <td id="projectalign">
+   <div id="projectname">HDF5<span id="projectnumber">&#160;1.15.0.3b65223</span>
    </div>
    <div id="projectbrief">API Reference</div>
   </td>
-   <td>        <div id="MSearchBox" class="MSearchBoxInactive">
-        <span class="left">
-          <span id="MSearchSelect"                onmouseover="return searchBox.OnSearchSelectShow()"                onmouseout="return searchBox.OnSearchSelectHide()">&#160;</span>
-          <input type="text" id="MSearchField" value="" placeholder="Search" accesskey="S"
-               onfocus="searchBox.OnSearchFieldFocus(true)" 
-               onblur="searchBox.OnSearchFieldFocus(false)" 
-               onkeyup="searchBox.OnSearchFieldChange(event)"/>
-          </span><span class="right">
-            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.svg" alt=""/></a>
-          </span>
-        </div>
-</td>
  </tr>
  </tbody>
 </table>
@@ -64,6 +52,33 @@
 var searchBox = new SearchBox("searchBox", "search/",'.html');
 /* @license-end */
 </script>
+  <div id="navrow1" class="tabs">
+    <ul class="tablist">
+      <li><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="_getting_started.html"><span>Getting&#160;started</span></a></li>
+      <li><a href="_u_g.html"><span>User&#160;Guide</span></a></li>
+      <li><a href="_r_m.html"><span>Reference&#160;Manual</span></a></li>
+      <li><a href="_cookbook.html"><span>Cookbook</span></a></li>
+      <li><a href="_t_n.html"><span>Technical&#160;Notes</span></a></li>
+      <li><a href="_r_f_c.html"><span>RFCs</span></a></li>
+      <li><a href="_s_p_e_c.html"><span>Specifications</span></a></li>
+      <li><a href="_g_l_s.html"><span>Glossary</span></a></li>
+      <li><a href="_about.html"><span>About</span></a></li>
+      <li>
+        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <span id="MSearchSelect"                onmouseover="return searchBox.OnSearchSelectShow()"                onmouseout="return searchBox.OnSearchSelectHide()">&#160;</span>
+          <input type="text" id="MSearchField" value="" placeholder="Search" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.svg" alt=""/></a>
+          </span>
+        </div>
+      </li>
+    </ul>
+  </div>
 </div><!-- top -->
 <div id="side-nav" class="ui-resizable side-nav-resizable">
   <div id="nav-tree">
@@ -103,7 +118,7 @@ $(document).ready(function(){initNavTree('_h5_f__u_g.html',''); initResizable();
 </div>
 
 <div><div class="header">
-  <div class="headertitle"><div class="title">The HDF5 File</div></div>
+  <div class="headertitle"><div class="title">HDF5 File</div></div>
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><h1><a class="anchor" id="sec_file"></a>
@@ -119,7 +134,7 @@ Introduction</h2>
 <li>The use of file access property lists </li>
 <li>The use of low-level file drivers</li>
 </ul>
-<p>This chapter assumes an understanding of the material presented in the data model chapter. For more information, </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="_h5_d_m__u_g.html#sec_data_model">The HDF5 Data Model and File Structure</a>.</dd></dl>
+<p>This chapter assumes an understanding of the material presented in the data model chapter. For more information, see <a class="el" href="_h5_d_m__u_g.html#sec_data_model">The HDF5 Data Model and File Structure</a>.</p>
 <h2><a class="anchor" id="subsec_file_access_modes"></a>
 File Access Modes</h2>
 <p>There are two issues regarding file access: </p><ul>
@@ -152,10 +167,10 @@ Is a file to be opened with read-only or read-write access?</li>
 File Creation and File Access Properties</h2>
 <p>File creation and file access property lists control the more complex aspects of creating and accessing files.</p>
 <p>File creation property lists control the characteristics of a file such as the size of the userblock, a user-definable data block; the size of data address parameters; properties of the B-trees that are used to manage the data in the file; and certain HDF5 Library versioning information.</p>
-<p>For more information, </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="_h5_f__u_g.html#subsubsec_file_property_lists_props">File Creation Properties</a>.</dd></dl>
+<p>For more information, see <a class="el" href="_h5_f__u_g.html#subsubsec_file_property_lists_props">File Creation Properties</a>.</p>
 <p>This section has a more detailed discussion of file creation properties. If you have no special requirements for these file characteristics, you can simply specify <a class="el" href="_h5_ppublic_8h.html#afa85e97bfbf9bf1c58e39263846c568f">H5P_DEFAULT</a> for the default file creation property list when a file creation property list is called for.</p>
 <p>File access property lists control properties and means of accessing a file such as data alignment characteristics, metadata block and cache sizes, data sieve buffer size, garbage collection settings, and parallel I/O. Data alignment, metadata block and cache sizes, and data sieve buffer size are factors in improving I/O performance.</p>
-<p>For more information, </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="_h5_f__u_g.html#subsubsec_file_property_lists_access">File Access Properties</a>.</dd></dl>
+<p>For more information, see <a class="el" href="_h5_f__u_g.html#subsubsec_file_property_lists_access">File Access Properties</a>.</p>
 <p>This section has a more detailed discussion of file access properties. If you have no special requirements for these file access characteristics, you can simply specify <a class="el" href="_h5_ppublic_8h.html#afa85e97bfbf9bf1c58e39263846c568f">H5P_DEFAULT</a> for the default file access property list when a file access property list is called for.</p>
 <table class="doxtable">
 <caption>Figure 10 - More sample file structures</caption>
@@ -312,7 +327,7 @@ File Function Summaries</h2>
 <tr>
 <td><a class="el" href="group___h5_f.html#ga6055c2ea3438bd4aaf221eba66843225" title="Determines whether a file is in the HDF5 format.">H5Fis_hdf5</a> </td><td>Determines whether a file is in the HDF5 format.  </td></tr>
 <tr>
-<td><a class="el" href="group___h5_f.html#ga7c4865fd36ee25d839725252150bb53b" title="Mounts an HDF5 file.">H5Fmount</a> </td><td>Mounts a file.  </td></tr>
+<td><a class="el" href="group___h5_f.html#ga9f5ca4c8695597e83568f9f4717fc083" title="Mounts an HDF5 file.">H5Fmount</a> </td><td>Mounts a file.  </td></tr>
 <tr>
 <td><a class="el" href="group___h5_f.html#gaa3f4f877b9bb591f3880423ed2bf44bc" title="Opens an existing HDF5 file.">H5Fopen</a> </td><td>Opens an existing HDF5 file.  </td></tr>
 <tr>
@@ -324,7 +339,7 @@ File Function Summaries</h2>
 <tr>
 <td><a class="el" href="group___p_h5_f.html#ga087dbbf37cb5c451ae8a6f66b227f0fc" title="Sets the MPI atomicity mode.">H5Fset_mpi_atomicity</a> </td><td>Sets the MPI atomicity mode.  </td></tr>
 <tr>
-<td><a class="el" href="group___h5_f.html#gae8f807d3f04a33f132ffb6c5295e897f" title="Unounts an HDF5 file.">H5Funmount</a> </td><td>Unmounts a file.  </td></tr>
+<td><a class="el" href="group___h5_f.html#ga79e80cbf6d9782402b353b763162779c" title="Un-mounts an HDF5 file.">H5Funmount</a> </td><td>Unmounts a file.  </td></tr>
 </table>
 <p><a class="anchor" id="fcpl_table_tag"></a>File creation property list functions (H5P) </p><div> <a class="anchor" id="table_fcpl_id"></a>
 <table class="doxtable">
@@ -495,14 +510,13 @@ Creating or Opening an HDF5 File</h2>
 </div><!-- fragment --><p><a class="el" href="group___h5_f.html#gaa3f4f877b9bb591f3880423ed2bf44bc" title="Opens an existing HDF5 file.">H5Fopen</a> opens an existing file with read-write access if <a class="el" href="_h5_fpublic_8h.html#a402673dec5c537b27a49a9a8bd6140b4">H5F_ACC_RDWR</a> is set and read-only access if <a class="el" href="_h5_fpublic_8h.html#a1c406ffa89f4acf5a332144a2683d394">H5F_ACC_RDONLY</a> is set.</p>
 <p>fapl_id is the file access property list identifier. Alternatively, <a class="el" href="_h5_ppublic_8h.html#afa85e97bfbf9bf1c58e39263846c568f">H5P_DEFAULT</a> indicates that the application relies on the default I/O access parameters. Creating and changing access property lists is documented further below.</p>
 <p>A file can be opened more than once via multiple <a class="el" href="group___h5_f.html#gaa3f4f877b9bb591f3880423ed2bf44bc" title="Opens an existing HDF5 file.">H5Fopen</a> calls. Each such call returns a unique file identifier and the file can be accessed through any of these file identifiers as long as they remain valid. Each of these file identifiers must be released by calling <a class="el" href="group___h5_f.html#gac55cd91d80822e4f8c2a7f04ea71b124" title="Terminates access to an HDF5 file.">H5Fclose</a> when it is no longer needed.</p>
-<p>For more information, </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="_h5_f__u_g.html#subsubsec_file_property_lists_access">File Access Properties</a>. For more information, </dd>
-<dd>
-<a class="el" href="_h5_f__u_g.html#subsec_file_property_lists">File Property Lists</a>.</dd></dl>
+<p>For more information, see <a class="el" href="_h5_f__u_g.html#subsubsec_file_property_lists_access">File Access Properties</a>.</p>
+<p>For more information, see <a class="el" href="_h5_f__u_g.html#subsec_file_property_lists">File Property Lists</a>.</p>
 <h2><a class="anchor" id="subsec_file_closes"></a>
 Closing an HDF5 File</h2>
 <p><a class="el" href="group___h5_f.html#gac55cd91d80822e4f8c2a7f04ea71b124" title="Terminates access to an HDF5 file.">H5Fclose</a> both closes a file and releases the file identifier returned by <a class="el" href="group___h5_f.html#gaa3f4f877b9bb591f3880423ed2bf44bc" title="Opens an existing HDF5 file.">H5Fopen</a> or <a class="el" href="group___h5_f.html#gae64b51ee9ac0781bc4ccc599d98387f4" title="Creates an HDF5 file.">H5Fcreate</a>. <a class="el" href="group___h5_f.html#gac55cd91d80822e4f8c2a7f04ea71b124" title="Terminates access to an HDF5 file.">H5Fclose</a> must be called when an application is done working with a file; while the HDF5 Library makes every effort to maintain file integrity, failure to call <a class="el" href="group___h5_f.html#gac55cd91d80822e4f8c2a7f04ea71b124" title="Terminates access to an HDF5 file.">H5Fclose</a> may result in the file being abandoned in an incomplete or corrupted state.</p>
 <p>To close a file, call <a class="el" href="group___h5_f.html#gac55cd91d80822e4f8c2a7f04ea71b124" title="Terminates access to an HDF5 file.">H5Fclose</a>: </p><div class="fragment"><div class="line"><a class="code hl_typedef" href="_h5public_8h.html#a3b079ecf932a5c599499cf7e298af160">herr_t</a> <a class="code hl_function" href="group___h5_f.html#gac55cd91d80822e4f8c2a7f04ea71b124">H5Fclose</a> (<a class="code hl_typedef" href="_h5_ipublic_8h.html#a0045db7ff9c22ad35db6ae91662e1943">hid_t</a> file_id)</div>
-<div class="ttc" id="a_h5public_8h_html_a3b079ecf932a5c599499cf7e298af160"><div class="ttname"><a href="_h5public_8h.html#a3b079ecf932a5c599499cf7e298af160">herr_t</a></div><div class="ttdeci">int herr_t</div><div class="ttdef"><b>Definition</b> H5public.h:235</div></div>
+<div class="ttc" id="a_h5public_8h_html_a3b079ecf932a5c599499cf7e298af160"><div class="ttname"><a href="_h5public_8h.html#a3b079ecf932a5c599499cf7e298af160">herr_t</a></div><div class="ttdeci">int herr_t</div><div class="ttdef"><b>Definition</b> H5public.h:239</div></div>
 </div><!-- fragment --><p> This function releases resources associated with an open file. After closing a file, the file identifier, file_id, cannot be used again as it will be undefined.</p>
 <p><a class="el" href="group___h5_f.html#gac55cd91d80822e4f8c2a7f04ea71b124" title="Terminates access to an HDF5 file.">H5Fclose</a> fulfills three purposes: to ensure that the file is left in an uncorrupted state, to ensure that all data has been written to the file, and to release resources. Use <a class="el" href="group___h5_f.html#gae686870f0a276c4d06bbc667b2c24124" title="Flushes all buffers associated with a file to storage.">H5Fflush</a> if you wish to ensure that all data has been written to the file but it is premature to close it.</p>
 <p>Note regarding serial mode behavior: When <a class="el" href="group___h5_f.html#gac55cd91d80822e4f8c2a7f04ea71b124" title="Terminates access to an HDF5 file.">H5Fclose</a> is called in serial mode, it closes the file and terminates new access to it, but it does not terminate access to objects that remain individually open within the file. That is, if <a class="el" href="group___h5_f.html#gac55cd91d80822e4f8c2a7f04ea71b124" title="Terminates access to an HDF5 file.">H5Fclose</a> is called for a file but one or more objects within the file remain open, those objects will remain accessible until they are individually closed. To illustrate, assume that a file, fileA, contains a dataset, data_setA, and that both are open when <a class="el" href="group___h5_f.html#gac55cd91d80822e4f8c2a7f04ea71b124" title="Terminates access to an HDF5 file.">H5Fclose</a> is called for fileA. data_setA will remain open and accessible, including writable, until it is explicitly closed. The file will be automatically and finally closed once all objects within it have been closed.</p>
@@ -528,7 +542,7 @@ File Creation Properties</h3>
 <h4>Userblock Size</h4>
 <div class="fragment"><div class="line"><a class="code hl_typedef" href="_h5public_8h.html#a3b079ecf932a5c599499cf7e298af160">herr_t</a> <a class="code hl_function" href="group___f_c_p_l.html#ga403bd982a2976c932237b186ed1cff4d">H5Pset_userblock</a> (<a class="code hl_typedef" href="_h5_ipublic_8h.html#a0045db7ff9c22ad35db6ae91662e1943">hid_t</a> plist, <a class="code hl_typedef" href="_h5public_8h.html#a7f81cce70fb546af88da24d9285d3c1c">hsize_t</a> size)</div>
 <div class="line"><a class="code hl_typedef" href="_h5public_8h.html#a3b079ecf932a5c599499cf7e298af160">herr_t</a> <a class="code hl_function" href="group___f_c_p_l.html#ga75b312bb0c70419fc428d743a65bed86">H5Pget_userblock</a> (<a class="code hl_typedef" href="_h5_ipublic_8h.html#a0045db7ff9c22ad35db6ae91662e1943">hid_t</a> plist, <a class="code hl_typedef" href="_h5public_8h.html#a7f81cce70fb546af88da24d9285d3c1c">hsize_t</a> *size)</div>
-<div class="ttc" id="a_h5public_8h_html_a7f81cce70fb546af88da24d9285d3c1c"><div class="ttname"><a href="_h5public_8h.html#a7f81cce70fb546af88da24d9285d3c1c">hsize_t</a></div><div class="ttdeci">uint64_t hsize_t</div><div class="ttdef"><b>Definition</b> H5public.h:297</div></div>
+<div class="ttc" id="a_h5public_8h_html_a7f81cce70fb546af88da24d9285d3c1c"><div class="ttname"><a href="_h5public_8h.html#a7f81cce70fb546af88da24d9285d3c1c">hsize_t</a></div><div class="ttdeci">uint64_t hsize_t</div><div class="ttdef"><b>Definition</b> H5public.h:301</div></div>
 <div class="ttc" id="agroup___f_c_p_l_html_ga403bd982a2976c932237b186ed1cff4d"><div class="ttname"><a href="group___f_c_p_l.html#ga403bd982a2976c932237b186ed1cff4d">H5Pset_userblock</a></div><div class="ttdeci">herr_t H5Pset_userblock(hid_t plist_id, hsize_t size)</div><div class="ttdoc">Sets user block size.</div></div>
 <div class="ttc" id="agroup___f_c_p_l_html_ga75b312bb0c70419fc428d743a65bed86"><div class="ttname"><a href="group___f_c_p_l.html#ga75b312bb0c70419fc428d743a65bed86">H5Pget_userblock</a></div><div class="ttdeci">herr_t H5Pget_userblock(hid_t plist_id, hsize_t *size)</div><div class="ttdoc">Retrieves the size of a user block.</div></div>
 </div><!-- fragment --><p>The userblock is a fixed-length block of data located at the beginning of the file and is ignored by the HDF5 library. This block is specifically set aside for any data or information that developers determine to be useful to their applications but that will not be used by the HDF5 library. The size of the userblock is defined in bytes and may be set to any power of two with a minimum size of 512 bytes. In other words, userblocks might be 512, 1024, or 2048 bytes in size.</p>
@@ -580,7 +594,7 @@ Alternate File Storage Layouts and Low-level File Drivers</h2>
 <li>More abstract situations such as virtual files</li>
 </ul>
 <p>This HDF5 address space is generally referred to as an HDF5 file regardless of its organization at the storage level.</p>
-<p>HDF5 employs an extremely flexible mechanism called the virtual file layer, or VFL, for file I/O. A full understanding of the VFL is only necessary if you plan to write your own drivers </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="_v_f_l.html">HDF5 Virtual File Layer</a> in the HDF5 Technical Notes.</dd></dl>
+<p>HDF5 employs an extremely flexible mechanism called the virtual file layer, or VFL, for file I/O. A full understanding of the VFL is only necessary if you plan to write your own drivers see <a class="el" href="_v_f_l.html">HDF5 Virtual File Layer</a> in the HDF5 Technical Notes.</p>
 <p>For our purposes here, it is sufficient to know that the low-level drivers used for file I/O reside in the VFL, as illustrated in the following figure. Note that H5FD_STREAM is not available with 1.8.x and later versions of the library.</p>
 <table class="doxtable">
 <tr>
@@ -635,7 +649,7 @@ I/O path from application to VFL and low-level drivers to storage</div></div>
 </table>
  </div><p>For more information, see the HDF5 Reference Manual entries for the function calls shown in the column on the right in the table above.</p>
 <p>Note that the low-level file drivers manage alternative file storage layouts. Dataset storage layouts (chunking, compression, and external dataset storage) are managed independently of file storage layouts.</p>
-<p>If an application requires a special-purpose low-level driver, the VFL provides a public API for creating one. For more information on how to create a driver, </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="_v_f_l.html">HDF5 Virtual File Layer</a> in the HDF5 Technical Notes.</dd></dl>
+<p>If an application requires a special-purpose low-level driver, the VFL provides a public API for creating one. For more information on how to create a driver, see <a class="el" href="_v_f_l.html">HDF5 Virtual File Layer</a> in the HDF5 Technical Notes.</p>
 <h3><a class="anchor" id="subsubsec_file_alternate_drivers_id"></a>
 Identifying the Previously‐used File Driver</h3>
 <p>When creating a new HDF5 file, no history exists, so the file driver must be specified if it is to be other than the default.</p>
@@ -728,9 +742,7 @@ Only one HDF5 file identifier can be opened for the file, the identifier returne
 The changes to the file will be discarded when access is terminated unless backing_store is set to 1</li>
 </ul>
 <p>Additional parameters may be added to these functions in the future.</p>
-<dl class="section see"><dt>See also</dt><dd><a href="https://portal.hdfgroup.org/documentation/hdf5-docs/advanced_topics/file_image_ops.html">HDF5 File Image Operations</a> section for information on more advanced usage of the Memory file driver, and </dd>
-<dd>
-<a href="https://docs.hdfgroup.org/archive/support/HDF5/doc/Advanced/ModifiedRegionWrites/ModifiedRegionWrites.pdf">Modified Region Writes</a> section for information on how to set write operations so that only modified regions are written to storage.</dd></dl>
+<p>see <a href="https://support.hdfgroup.org/releases/hdf5/documentation/advanced_topics/file_image_ops.html">HDF5 File Image Operations</a> section for information on more advanced usage of the Memory file driver, and see <a href="https://support.hdfgroup.org/releases/hdf5/documentation/advanced_topics/ModifiedRegionWrites.pdf">Modified Region Writes</a> section for information on how to set write operations so that only modified regions are written to storage.</p>
 <h3><a class="anchor" id="subsubsec_file_alternate_drivers_family"></a>
 The Family Driver</h3>
 <p>HDF5 files can become quite large, and this can create problems on systems that do not support files larger than 2 gigabytes. The HDF5 file family mechanism is designed to solve the problems this creates by splitting the HDF5 file address space across several smaller files. This structure does not affect how metadata and raw data are stored: they are mixed in the address space just as they would be in a single, contiguous file.</p>
@@ -743,7 +755,7 @@ The Family Driver</h3>
 <div class="ttc" id="agroup___f_a_p_l_html_ga95d19da25f196ce1ace10af00f49ab53"><div class="ttname"><a href="group___f_a_p_l.html#ga95d19da25f196ce1ace10af00f49ab53">H5Pset_fapl_family</a></div><div class="ttdeci">H5_DLL herr_t H5Pset_fapl_family(hid_t fapl_id, hsize_t memb_size, hid_t memb_fapl_id)</div><div class="ttdoc">Sets the file access property list to use the family driver.</div></div>
 </div><!-- fragment --><p>Each member of the family is the same logical size though the size and disk storage reported by file system listing tools may be substantially smaller. Examples of file system listing tools are </p><div class="fragment"><div class="line">ls -l</div>
 </div><!-- fragment --><p> on a Unix system or the detailed folder listing on an Apple or Microsoft Windows system. The name passed to <a class="el" href="group___h5_f.html#gae64b51ee9ac0781bc4ccc599d98387f4" title="Creates an HDF5 file.">H5Fcreate</a> or <a class="el" href="group___h5_f.html#gaa3f4f877b9bb591f3880423ed2bf44bc" title="Opens an existing HDF5 file.">H5Fopen</a> should include a printf(3c)-style integer format specifier which will be replaced with the family member number. The first family member is numbered zero (0).</p>
-<p><a class="el" href="group___f_a_p_l.html#ga95d19da25f196ce1ace10af00f49ab53" title="Sets the file access property list to use the family driver.">H5Pset_fapl_family</a> sets the access properties to use the Family driver; any previously defined driver properties are erased from the property list. member_properties will serve as the file access property list for each member of the file family. memb_size specifies the logical size, in bytes, of each family member. memb_size is used only when creating a new file or truncating an existing file; otherwise the member size is determined by the size of the first member of the family being opened. Note: If the size of the off_t type is four bytes, the maximum family member size is usually 2^31-1 because the byte at offset 2,147,483,647 is generally inaccessible.</p>
+<p><a class="el" href="group___f_a_p_l.html#ga95d19da25f196ce1ace10af00f49ab53" title="Sets the file access property list to use the family driver.">H5Pset_fapl_family</a> sets the access properties to use the Family driver; any previously defined driver properties are erased from the property list. member_properties will serve as the file access property list for each member of the file family. memb_size specifies the logical size, in bytes, of each family member. memb_size is used only when creating a new file or truncating an existing file; otherwise the member size is determined by the size of the first member of the family being opened.</p>
 <p><a class="el" href="group___f_a_p_l.html#ga0bc1a003f26bf4b53e4487b6ca117389" title="Returns file access property list information.">H5Pget_fapl_family</a> is used to retrieve file family properties. If the file access property list is set to use the Family driver, member_properties will be returned with a pointer to a copy of the appropriate member access property list. If memb_size is non-null, it will contain the logical size, in bytes, of family members.</p>
 <p>Additional parameters may be added to these functions in the future.</p>
 <h4>Unix Tools and an HDF5 Utility</h4>
@@ -771,7 +783,7 @@ In situations requiring frequent access to metadata held in RAM while the raw da
 <div class="line"><a class="code hl_typedef" href="_h5public_8h.html#a3b079ecf932a5c599499cf7e298af160">herr_t</a> <a class="code hl_function" href="group___f_a_p_l.html#ga765b7880795a139f3b567743ac88c3c7">H5Pget_fapl_multi</a> (<a class="code hl_typedef" href="_h5_ipublic_8h.html#a0045db7ff9c22ad35db6ae91662e1943">hid_t</a> fapl_id, <span class="keyword">const</span> <a class="code hl_typedef" href="_h5_f_dpublic_8h.html#a02887a6f018be1a0ce7358522095578b">H5FD_mem_t</a> *memb_map, <span class="keyword">const</span> <a class="code hl_typedef" href="_h5_ipublic_8h.html#a0045db7ff9c22ad35db6ae91662e1943">hid_t</a> *memb_fapl,</div>
 <div class="line">                           <span class="keyword">const</span> <span class="keywordtype">char</span> **memb_name, <span class="keyword">const</span> <a class="code hl_typedef" href="_h5public_8h.html#a8c86e866f40d7167cf9a1934c72b856f">haddr_t</a> *memb_addr, <span class="keywordtype">bool</span> *relax)</div>
 <div class="ttc" id="a_h5_f_dpublic_8h_html_a02887a6f018be1a0ce7358522095578b"><div class="ttname"><a href="_h5_f_dpublic_8h.html#a02887a6f018be1a0ce7358522095578b">H5FD_mem_t</a></div><div class="ttdeci">enum H5F_mem_t H5FD_mem_t</div><div class="ttdef"><b>Definition</b> H5FDpublic.h:260</div></div>
-<div class="ttc" id="a_h5public_8h_html_a8c86e866f40d7167cf9a1934c72b856f"><div class="ttname"><a href="_h5public_8h.html#a8c86e866f40d7167cf9a1934c72b856f">haddr_t</a></div><div class="ttdeci">uint64_t haddr_t</div><div class="ttdef"><b>Definition</b> H5public.h:325</div></div>
+<div class="ttc" id="a_h5public_8h_html_a8c86e866f40d7167cf9a1934c72b856f"><div class="ttname"><a href="_h5public_8h.html#a8c86e866f40d7167cf9a1934c72b856f">haddr_t</a></div><div class="ttdeci">uint64_t haddr_t</div><div class="ttdef"><b>Definition</b> H5public.h:345</div></div>
 <div class="ttc" id="agroup___f_a_p_l_html_ga296bd22cc1e462351f8f0a00a46baf58"><div class="ttname"><a href="group___f_a_p_l.html#ga296bd22cc1e462351f8f0a00a46baf58">H5Pset_fapl_multi</a></div><div class="ttdeci">H5_DLL herr_t H5Pset_fapl_multi(hid_t fapl_id, const H5FD_mem_t *memb_map, const hid_t *memb_fapl, const char *const *memb_name, const haddr_t *memb_addr, hbool_t relax)</div><div class="ttdoc">Sets up use of the multi-file driver.</div></div>
 <div class="ttc" id="agroup___f_a_p_l_html_ga765b7880795a139f3b567743ac88c3c7"><div class="ttname"><a href="group___f_a_p_l.html#ga765b7880795a139f3b567743ac88c3c7">H5Pget_fapl_multi</a></div><div class="ttdeci">H5_DLL herr_t H5Pget_fapl_multi(hid_t fapl_id, H5FD_mem_t *memb_map, hid_t *memb_fapl, char **memb_name, haddr_t *memb_addr, hbool_t *relax)</div><div class="ttdoc">Returns information about the multi-file access property list.</div></div>
 </div><!-- fragment --><p><a class="el" href="group___f_a_p_l.html#ga296bd22cc1e462351f8f0a00a46baf58" title="Sets up use of the multi-file driver.">H5Pset_fapl_multi</a> sets the file access properties to use the Multi driver; any previously defined driver properties are erased from the property list. With the Multi driver invoked, the application will provide a base name to <a class="el" href="group___h5_f.html#gaa3f4f877b9bb591f3880423ed2bf44bc" title="Opens an existing HDF5 file.">H5Fopen</a> or <a class="el" href="group___h5_f.html#gae64b51ee9ac0781bc4ccc599d98387f4" title="Creates an HDF5 file.">H5Fcreate</a>. The files will be named by that base name as modified by the rule indicated in memb_name. File access will be governed by the file access property list memb_properties.</p>
@@ -849,8 +861,8 @@ Example with the File Access Property List</h3>
 <div class="ttc" id="a_h5_fpublic_8h_html_a402673dec5c537b27a49a9a8bd6140b4"><div class="ttname"><a href="_h5_fpublic_8h.html#a402673dec5c537b27a49a9a8bd6140b4">H5F_ACC_RDWR</a></div><div class="ttdeci">#define H5F_ACC_RDWR</div><div class="ttdef"><b>Definition</b> H5Fpublic.h:49</div></div>
 </div><!-- fragment --><h2><a class="anchor" id="subsec_file_multiple"></a>
 Working with Multiple HDF5 Files</h2>
-<p>Multiple HDF5 files can be associated so that the files can be worked with as though all the information is in a single HDF5 file. A temporary association can be set up by means of the <a class="el" href="group___h5_f.html#ga7c4865fd36ee25d839725252150bb53b" title="Mounts an HDF5 file.">H5Fmount</a> function. A permanent association can be set up by means of the external link function <a class="el" href="group___h5_l.html#ga15dfaeb9b1c0b3136533cb97ee45e683" title="Creates an external link, a soft link to an object in a different file.">H5Lcreate_external</a>.</p>
-<p>The purpose of this section is to describe what happens when the <a class="el" href="group___h5_f.html#ga7c4865fd36ee25d839725252150bb53b" title="Mounts an HDF5 file.">H5Fmount</a> function is used to mount one file on another.</p>
+<p>Multiple HDF5 files can be associated so that the files can be worked with as though all the information is in a single HDF5 file. A temporary association can be set up by means of the <a class="el" href="group___h5_f.html#ga9f5ca4c8695597e83568f9f4717fc083" title="Mounts an HDF5 file.">H5Fmount</a> function. A permanent association can be set up by means of the external link function <a class="el" href="group___h5_l.html#ga15dfaeb9b1c0b3136533cb97ee45e683" title="Creates an external link, a soft link to an object in a different file.">H5Lcreate_external</a>.</p>
+<p>The purpose of this section is to describe what happens when the <a class="el" href="group___h5_f.html#ga9f5ca4c8695597e83568f9f4717fc083" title="Mounts an HDF5 file.">H5Fmount</a> function is used to mount one file on another.</p>
 <p>When a file is mounted on another, the mounted file is mounted at a group, and the root group of the mounted file takes the place of that group until the mounted file is unmounted or until the files are closed.</p>
 <p>The figure below shows two files before one is mounted on the other. File1 has two groups and three datasets. The group that is the target of the A link has links, Z and Y, to two of the datasets. The group that is the target of the B link has a link, W, to the other dataset. File2 has three groups and three datasets. The groups in File2 are the targets of the AA, BB, and CC links. The datasets in File2 are the targets of the ZZ, YY, and WW links.</p>
 <table class="doxtable">
@@ -872,11 +884,11 @@ File2 mounted on File1</div></div>
 </table>
 <p>Note: In the figure above, the dataset that is the target of the W link is not shown. That dataset is masked by the mounted file.</p>
 <p>If a file is mounted on a group that has members, those members are hidden until the mounted file is unmounted. There are two ways around this if you need to work with a group member. One is to mount the file on an empty group. Another is to open the group member before you mount the file. Opening the group member will return an identifier that you can use to locate the group member.</p>
-<p>The example below shows how <a class="el" href="group___h5_f.html#ga7c4865fd36ee25d839725252150bb53b" title="Mounts an HDF5 file.">H5Fmount</a> might be used to mount File2 onto File1.</p>
-<p><em>Using H5Fmount</em> </p><div class="fragment"><div class="line">status = <a class="code hl_function" href="group___h5_f.html#ga7c4865fd36ee25d839725252150bb53b">H5Fmount</a>(loc_id, <span class="stringliteral">&quot;/B&quot;</span>, child_id, plist_id)</div>
-<div class="ttc" id="agroup___h5_f_html_ga7c4865fd36ee25d839725252150bb53b"><div class="ttname"><a href="group___h5_f.html#ga7c4865fd36ee25d839725252150bb53b">H5Fmount</a></div><div class="ttdeci">herr_t H5Fmount(hid_t loc, const char *name, hid_t child, hid_t plist)</div><div class="ttdoc">Mounts an HDF5 file.</div></div>
+<p>The example below shows how <a class="el" href="group___h5_f.html#ga9f5ca4c8695597e83568f9f4717fc083" title="Mounts an HDF5 file.">H5Fmount</a> might be used to mount File2 onto File1.</p>
+<p><em>Using H5Fmount</em> </p><div class="fragment"><div class="line">status = <a class="code hl_function" href="group___h5_f.html#ga9f5ca4c8695597e83568f9f4717fc083">H5Fmount</a>(loc_id, <span class="stringliteral">&quot;/B&quot;</span>, child_id, plist_id)</div>
+<div class="ttc" id="agroup___h5_f_html_ga9f5ca4c8695597e83568f9f4717fc083"><div class="ttname"><a href="group___h5_f.html#ga9f5ca4c8695597e83568f9f4717fc083">H5Fmount</a></div><div class="ttdeci">herr_t H5Fmount(hid_t loc_id, const char *name, hid_t child, hid_t plist)</div><div class="ttdoc">Mounts an HDF5 file.</div></div>
 </div><!-- fragment --><p>Note: In the code example above, loc_id is the file identifier for File1, /B is the link path to the group where File2 is mounted, child_id is the file identifier for File2, and plist_id is a property list identifier. For more information, </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="_h5_g__u_g.html#sec_group">HDF5 Groups</a>.</dd></dl>
-<p>See the entries for <a class="el" href="group___h5_f.html#ga7c4865fd36ee25d839725252150bb53b" title="Mounts an HDF5 file.">H5Fmount</a>, <a class="el" href="group___h5_f.html#gae8f807d3f04a33f132ffb6c5295e897f" title="Unounts an HDF5 file.">H5Funmount</a>, and <a class="el" href="group___h5_l.html#ga15dfaeb9b1c0b3136533cb97ee45e683" title="Creates an external link, a soft link to an object in a different file.">H5Lcreate_external</a> in the HDF5 Reference Manual.</p>
+<p>See the entries for <a class="el" href="group___h5_f.html#ga9f5ca4c8695597e83568f9f4717fc083" title="Mounts an HDF5 file.">H5Fmount</a>, <a class="el" href="group___h5_f.html#ga79e80cbf6d9782402b353b763162779c" title="Un-mounts an HDF5 file.">H5Funmount</a>, and <a class="el" href="group___h5_l.html#ga15dfaeb9b1c0b3136533cb97ee45e683" title="Creates an external link, a soft link to an object in a different file.">H5Lcreate_external</a> in the HDF5 Reference Manual.</p>
 <p>Previous Chapter <a class="el" href="_h5__u_g.html#sec_program">The HDF5 Library and Programming Model</a> - Next Chapter <a class="el" href="_h5_g__u_g.html#sec_group">HDF5 Groups</a> </p>
 </div></div><!-- contents -->
 </div><!-- PageDoc -->

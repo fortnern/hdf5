@@ -1,12 +1,13 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.7"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <title>HDF5: Dataset Creation Properties</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript">var page_layout=1;</script>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
 <link href="navtree.css" rel="stylesheet" type="text/css"/>
@@ -22,37 +23,24 @@
 /* @license-end */
 </script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="hdf5doxy.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
 <link href="hdf5doxy.css" rel="stylesheet" type="text/css">
-<!-- <link href="hdf5doxy.css" rel="stylesheet" type="text/css"/>
- -->
 <script type="text/javascript" src="hdf5_navtree_hacks.js"></script>
+<div style="background:#FFDDDD;font-size:120%;text-align:center;margin:0;padding:5px">Please, help us to better serve our user community by answering the following short survey:  <a href="https://www.hdfgroup.org/website-survey/">https://www.hdfgroup.org/website-survey/</a></div>
 </head>
 <body>
-<div style="background:#FFDDDD;font-size:120%;text-align:center;margin:0;padding:5px">Please, help us to better serve our user community by answering the following short survey:  <a href="https://www.hdfgroup.org/website-survey/">https://www.hdfgroup.org/website-survey/</a></div>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
 <div id="titlearea">
 <table cellspacing="0" cellpadding="0">
  <tbody>
- <tr style="height: 56px;">
+ <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="HDFG-logo.png"/></td>
-  <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname"><a href="https://www.hdfgroup.org">HDF5</a>
-   &#160;<span id="projectnumber">1.15.0.603f8b1</span>
+  <td id="projectalign">
+   <div id="projectname">HDF5<span id="projectnumber">&#160;1.15.0.3b65223</span>
    </div>
    <div id="projectbrief">API Reference</div>
   </td>
-   <td>        <div id="MSearchBox" class="MSearchBoxInactive">
-        <span class="left">
-          <span id="MSearchSelect"                onmouseover="return searchBox.OnSearchSelectShow()"                onmouseout="return searchBox.OnSearchSelectHide()">&#160;</span>
-          <input type="text" id="MSearchField" value="" placeholder="Search" accesskey="S"
-               onfocus="searchBox.OnSearchFieldFocus(true)" 
-               onblur="searchBox.OnSearchFieldFocus(false)" 
-               onkeyup="searchBox.OnSearchFieldChange(event)"/>
-          </span><span class="right">
-            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.svg" alt=""/></a>
-          </span>
-        </div>
-</td>
  </tr>
  </tbody>
 </table>
@@ -64,6 +52,33 @@
 var searchBox = new SearchBox("searchBox", "search/",'.html');
 /* @license-end */
 </script>
+  <div id="navrow1" class="tabs">
+    <ul class="tablist">
+      <li><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="_getting_started.html"><span>Getting&#160;started</span></a></li>
+      <li><a href="_u_g.html"><span>User&#160;Guide</span></a></li>
+      <li><a href="_r_m.html"><span>Reference&#160;Manual</span></a></li>
+      <li><a href="_cookbook.html"><span>Cookbook</span></a></li>
+      <li><a href="_t_n.html"><span>Technical&#160;Notes</span></a></li>
+      <li><a href="_r_f_c.html"><span>RFCs</span></a></li>
+      <li><a href="_s_p_e_c.html"><span>Specifications</span></a></li>
+      <li><a href="_g_l_s.html"><span>Glossary</span></a></li>
+      <li><a href="_about.html"><span>About</span></a></li>
+      <li>
+        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <span id="MSearchSelect"                onmouseover="return searchBox.OnSearchSelectShow()"                onmouseout="return searchBox.OnSearchSelectHide()">&#160;</span>
+          <input type="text" id="MSearchField" value="" placeholder="Search" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.svg" alt=""/></a>
+          </span>
+        </div>
+      </li>
+    </ul>
+  </div>
 </div><!-- top -->
 <div id="side-nav" class="ui-resizable side-nav-resizable">
   <div id="nav-tree">
@@ -167,11 +182,11 @@ $(document).ready(function(){initNavTree('group___d_c_p_l.html',''); initResizab
 <tr>
 <td><a class="el" href="group___d_c_p_l.html#ga37de4b6071a94574cfab5cd6de9c3fc6" title="Sets up use of the SZIP compression filter.">H5Pset_szip</a> </td><td>Sets up use of the Szip compression filter.  </td></tr>
 <tr>
-<td><a class="el" href="group___d_c_p_l.html#ga85ff7c9c827fa524041cd58c199b77b8" title="Adds an external file to the list of external files.">H5Pset_external</a> </td><td>Adds an external file to the list of external files.  </td></tr>
+<td><a class="el" href="group___d_c_p_l.html#ga64bf68bda464eaaabfe24846533b1935" title="Adds an external file to the list of external files.">H5Pset_external</a> </td><td>Adds an external file to the list of external files.  </td></tr>
 <tr>
 <td><a class="el" href="group___d_c_p_l.html#ga4c45d90845ea7627b6238f95168c41ce" title="Returns the number of external files for a dataset.">H5Pget_external_count</a> </td><td>Returns the number of external files for a dataset.  </td></tr>
 <tr>
-<td><a class="el" href="group___d_c_p_l.html#ga78253b80b6c86faf7ff0db135146521d" title="Returns information about an external file.">H5Pget_external</a> </td><td>Returns information about an external file.  </td></tr>
+<td><a class="el" href="group___d_c_p_l.html#ga454633ced11c3fa64f70d5816fa7f6e2" title="Returns information about an external file.">H5Pget_external</a> </td><td>Returns information about an external file.  </td></tr>
 <tr>
 <td><a class="el" href="group___a_c_p_l.html#gad4fa8e2d17236786f770cf17eef908cc" title="Sets the character encoding used to encode link and attribute names.">H5Pset_char_encoding</a> </td><td>Sets the character encoding used to encode a string. Use to set ASCII or UTF-8 character encoding for object names.  </td></tr>
 <tr>
@@ -215,9 +230,9 @@ Functions</h2></td></tr>
 <tr class="memitem:ga2fd4f0446a38186db8256cef4c97a970"><td class="memItemLeft" align="right" valign="top"><a class="el" href="_h5public_8h.html#a3b079ecf932a5c599499cf7e298af160">herr_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___d_c_p_l.html#ga2fd4f0446a38186db8256cef4c97a970">H5Pget_dset_no_attrs_hint</a> (<a class="el" href="_h5_ipublic_8h.html#a0045db7ff9c22ad35db6ae91662e1943">hid_t</a> dcpl_id, <a class="el" href="_h5public_8h.html#ad470b00eccd2115c707c02de5fa1120d">hbool_t</a> *minimize)</td></tr>
 <tr class="memdesc:ga2fd4f0446a38186db8256cef4c97a970"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves the setting for whether or not to create minimized dataset object headers.  <br /></td></tr>
 <tr class="separator:ga2fd4f0446a38186db8256cef4c97a970"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga78253b80b6c86faf7ff0db135146521d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="_h5public_8h.html#a3b079ecf932a5c599499cf7e298af160">herr_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___d_c_p_l.html#ga78253b80b6c86faf7ff0db135146521d">H5Pget_external</a> (<a class="el" href="_h5_ipublic_8h.html#a0045db7ff9c22ad35db6ae91662e1943">hid_t</a> plist_id, unsigned idx, size_t name_size, char *name, off_t *offset, <a class="el" href="_h5public_8h.html#a7f81cce70fb546af88da24d9285d3c1c">hsize_t</a> *size)</td></tr>
-<tr class="memdesc:ga78253b80b6c86faf7ff0db135146521d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns information about an external file.  <br /></td></tr>
-<tr class="separator:ga78253b80b6c86faf7ff0db135146521d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga454633ced11c3fa64f70d5816fa7f6e2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="_h5public_8h.html#a3b079ecf932a5c599499cf7e298af160">herr_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___d_c_p_l.html#ga454633ced11c3fa64f70d5816fa7f6e2">H5Pget_external</a> (<a class="el" href="_h5_ipublic_8h.html#a0045db7ff9c22ad35db6ae91662e1943">hid_t</a> plist_id, unsigned idx, size_t name_size, char *name, <a class="el" href="_h5public_8h.html#a7231b68f6d5811a693d4cbc937a34604">HDoff_t</a> *offset, <a class="el" href="_h5public_8h.html#a7f81cce70fb546af88da24d9285d3c1c">hsize_t</a> *size)</td></tr>
+<tr class="memdesc:ga454633ced11c3fa64f70d5816fa7f6e2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns information about an external file.  <br /></td></tr>
+<tr class="separator:ga454633ced11c3fa64f70d5816fa7f6e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga4c45d90845ea7627b6238f95168c41ce"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___d_c_p_l.html#ga4c45d90845ea7627b6238f95168c41ce">H5Pget_external_count</a> (<a class="el" href="_h5_ipublic_8h.html#a0045db7ff9c22ad35db6ae91662e1943">hid_t</a> plist_id)</td></tr>
 <tr class="memdesc:ga4c45d90845ea7627b6238f95168c41ce"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the number of external files for a dataset.  <br /></td></tr>
 <tr class="separator:ga4c45d90845ea7627b6238f95168c41ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -257,9 +272,9 @@ Functions</h2></td></tr>
 <tr class="memitem:gaf5ae8c0257c02e3fbe50bde70b1eb8be"><td class="memItemLeft" align="right" valign="top"><a class="el" href="_h5public_8h.html#a3b079ecf932a5c599499cf7e298af160">herr_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___d_c_p_l.html#gaf5ae8c0257c02e3fbe50bde70b1eb8be">H5Pset_dset_no_attrs_hint</a> (<a class="el" href="_h5_ipublic_8h.html#a0045db7ff9c22ad35db6ae91662e1943">hid_t</a> dcpl_id, <a class="el" href="_h5public_8h.html#ad470b00eccd2115c707c02de5fa1120d">hbool_t</a> minimize)</td></tr>
 <tr class="memdesc:gaf5ae8c0257c02e3fbe50bde70b1eb8be"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the flag to create minimized dataset object headers.  <br /></td></tr>
 <tr class="separator:gaf5ae8c0257c02e3fbe50bde70b1eb8be"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga85ff7c9c827fa524041cd58c199b77b8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="_h5public_8h.html#a3b079ecf932a5c599499cf7e298af160">herr_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___d_c_p_l.html#ga85ff7c9c827fa524041cd58c199b77b8">H5Pset_external</a> (<a class="el" href="_h5_ipublic_8h.html#a0045db7ff9c22ad35db6ae91662e1943">hid_t</a> plist_id, const char *name, off_t offset, <a class="el" href="_h5public_8h.html#a7f81cce70fb546af88da24d9285d3c1c">hsize_t</a> size)</td></tr>
-<tr class="memdesc:ga85ff7c9c827fa524041cd58c199b77b8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds an external file to the list of external files.  <br /></td></tr>
-<tr class="separator:ga85ff7c9c827fa524041cd58c199b77b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga64bf68bda464eaaabfe24846533b1935"><td class="memItemLeft" align="right" valign="top"><a class="el" href="_h5public_8h.html#a3b079ecf932a5c599499cf7e298af160">herr_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___d_c_p_l.html#ga64bf68bda464eaaabfe24846533b1935">H5Pset_external</a> (<a class="el" href="_h5_ipublic_8h.html#a0045db7ff9c22ad35db6ae91662e1943">hid_t</a> plist_id, const char *name, <a class="el" href="_h5public_8h.html#a7231b68f6d5811a693d4cbc937a34604">HDoff_t</a> offset, <a class="el" href="_h5public_8h.html#a7f81cce70fb546af88da24d9285d3c1c">hsize_t</a> size)</td></tr>
+<tr class="memdesc:ga64bf68bda464eaaabfe24846533b1935"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds an external file to the list of external files.  <br /></td></tr>
+<tr class="separator:ga64bf68bda464eaaabfe24846533b1935"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga6bd822266b31f86551a9a1d79601b6a2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="_h5public_8h.html#a3b079ecf932a5c599499cf7e298af160">herr_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___d_c_p_l.html#ga6bd822266b31f86551a9a1d79601b6a2">H5Pset_fill_time</a> (<a class="el" href="_h5_ipublic_8h.html#a0045db7ff9c22ad35db6ae91662e1943">hid_t</a> plist_id, <a class="el" href="_h5_dpublic_8h.html#aa39293626c4e68dd28b06c0dc84bde4a">H5D_fill_time_t</a> fill_time)</td></tr>
 <tr class="memdesc:ga6bd822266b31f86551a9a1d79601b6a2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the time when fill values are written to a dataset.  <br /></td></tr>
 <tr class="separator:ga6bd822266b31f86551a9a1d79601b6a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -550,8 +565,8 @@ See the <code>alloc_time</code> description in <a class="el" href="group___d_c_p
 
 </div>
 </div>
-<a id="ga78253b80b6c86faf7ff0db135146521d" name="ga78253b80b6c86faf7ff0db135146521d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga78253b80b6c86faf7ff0db135146521d">&#9670;&#160;</a></span>H5Pget_external()</h2>
+<a id="ga454633ced11c3fa64f70d5816fa7f6e2" name="ga454633ced11c3fa64f70d5816fa7f6e2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga454633ced11c3fa64f70d5816fa7f6e2">&#9670;&#160;</a></span>H5Pget_external()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -583,7 +598,7 @@ See the <code>alloc_time</code> description in <a class="el" href="group___d_c_p
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">off_t *&#160;</td>
+          <td class="paramtype"><a class="el" href="_h5public_8h.html#a7231b68f6d5811a693d4cbc937a34604">HDoff_t</a> *&#160;</td>
           <td class="paramname"><em>offset</em>, </td>
         </tr>
         <tr>
@@ -613,10 +628,12 @@ See the <code>alloc_time</code> description in <a class="el" href="group___d_c_p
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Returns a non-negative value if successful; otherwise, returns a negative value.</dd></dl>
-<p><a class="el" href="group___d_c_p_l.html#ga78253b80b6c86faf7ff0db135146521d" title="Returns information about an external file.">H5Pget_external()</a> returns information about an external file. The external file is specified by its index, <code>idx</code>, which is a number from zero to N-1, where N is the value returned by <a class="el" href="group___d_c_p_l.html#ga4c45d90845ea7627b6238f95168c41ce" title="Returns the number of external files for a dataset.">H5Pget_external_count()</a>. At most <code>name_size</code> characters are copied into the <code>name</code> array. If the external file name is longer than <code>name_size</code> with the null terminator, the return value is not null terminated (similar to strncpy()).</p>
+<p><a class="el" href="group___d_c_p_l.html#ga454633ced11c3fa64f70d5816fa7f6e2" title="Returns information about an external file.">H5Pget_external()</a> returns information about an external file. The external file is specified by its index, <code>idx</code>, which is a number from zero to N-1, where N is the value returned by <a class="el" href="group___d_c_p_l.html#ga4c45d90845ea7627b6238f95168c41ce" title="Returns the number of external files for a dataset.">H5Pget_external_count()</a>. At most <code>name_size</code> characters are copied into the <code>name</code> array. If the external file name is longer than <code>name_size</code> with the null terminator, the return value is not null terminated (similar to strncpy()).</p>
 <p>If <code>name_size</code> is zero or <code>name</code> is the null pointer, the external file name is not returned. If <code>offset</code> or <code>size</code> are null pointers then the corresponding information is not returned.</p>
-<dl class="section note"><dt>Note</dt><dd>On Windows, off_t is typically a 32-bit signed long value, which limits the valid offset that can be returned to 2 GiB.</dd></dl>
-<dl class="section version"><dt>Version</dt><dd>1.6.4 <code>idx</code> parameter type changed to unsigned. </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>In 1.14.x and earlier, the offset parameter was of type off_t, which is a 32-bit signed long value on Windows, which limited the valid offset that can be returned to 2 GiB.</dd></dl>
+<dl class="section version"><dt>Version</dt><dd>1.16.0 <code>offset</code> parameter type changed to HDoff_t from off_t. </dd>
+<dd>
+1.6.4 <code>idx</code> parameter type changed to unsigned. </dd></dl>
 <dl class="section since"><dt>Since</dt><dd>1.0.0 </dd></dl>
 
 </div>
@@ -1047,14 +1064,16 @@ VDS Functions: <a class="el" href="group___d_c_p_l.html#ga83dcce1ce110d1ff6eae0f
     <tr><td class="paramdir">[in]</td><td class="paramname">dcpl_id</td><td>Dataset creation property list identifier </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">index</td><td>Mapping index. The value of <code>index</code> is 0 (zero) or greater and less than <code>count</code> (0 ≤ <code>index</code> &lt; <code>count</code>), where <code>count</code> is the number of mappings returned by <a class="el" href="group___d_c_p_l.html#ga83dcce1ce110d1ff6eae0fb77d4a7c85" title="Gets the number of mappings for the virtual dataset.">H5Pget_virtual_count()</a>. </td></tr>
     <tr><td class="paramdir">[out]</td><td class="paramname">name</td><td>A buffer containing the name of the source dataset </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">size</td><td>The size, in bytes, of the name buffer. Must be the size of the dataset name in bytes plus 1 for a NULL terminator</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">size</td><td>The size, in bytes, of the <code>name</code> buffer. Must be the size of the dataset name in bytes plus 1 for a NULL terminator</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Returns the length of the dataset name if successful; otherwise returns a negative value.</dd></dl>
 <p><a class="el" href="group___d_c_p_l.html#gaf50620fd5d83dc9ca1e5c3f374c5a952" title="Gets the name of a source dataset used in the mapping.">H5Pget_virtual_dsetname()</a> takes the dataset creation property list for the virtual dataset, <code>dcpl_id</code>, the mapping index, <code>index</code>, the size of the dataset name for a source dataset, <code>size</code>, and retrieves the name of the source dataset used in the mapping.</p>
 <p>Up to <code>size</code> characters of the dataset name are returned in <code>name</code>; additional characters, if any, are not returned to the user application.</p>
-<p>If the length of the dataset name, which determines the required value of <code>size</code>, is unknown, a preliminary call to <a class="el" href="group___d_c_p_l.html#gaf50620fd5d83dc9ca1e5c3f374c5a952" title="Gets the name of a source dataset used in the mapping.">H5Pget_virtual_dsetname()</a> with the last two parameters set to NULL and zero respectively can be made. The return value of this call will be the size in bytes of the dataset name. That value, plus 1 for a NULL terminator, must then be assigned to <code>size</code> for a second <a class="el" href="group___d_c_p_l.html#gaf50620fd5d83dc9ca1e5c3f374c5a952" title="Gets the name of a source dataset used in the mapping.">H5Pget_virtual_dsetname()</a> call, which will retrieve the actual dataset name.</p>
+<p>Up to <code>size</code> characters of the dataset name are returned in <code>name</code>; additional characters, if any, are not returned to the user application.<br  />
+<br  />
+ If the length of the dataset name, which determines the required value of <code>size</code>, is unknown, a preliminary call to <a class="el" href="group___d_c_p_l.html#gaf50620fd5d83dc9ca1e5c3f374c5a952" title="Gets the name of a source dataset used in the mapping.">H5Pget_virtual_dsetname()</a> with the last two parameters set to NULL and zero respectively can be made. The return value of this call will be the size in bytes of the dataset name. That value, plus 1 for a NULL terminator, must then be assigned to <code>size</code> for a second <a class="el" href="group___d_c_p_l.html#gaf50620fd5d83dc9ca1e5c3f374c5a952" title="Gets the name of a source dataset used in the mapping.">H5Pget_virtual_dsetname()</a> call, which will retrieve the actual dataset name.</p>
 <dl class="section see"><dt>See also</dt><dd>Supporting Functions: <a class="el" href="group___d_c_p_l.html#ga655530b0f40990507fedeef6b3068db3" title="Returns the layout of the raw data for a dataset.">H5Pget_layout()</a>, <a class="el" href="group___d_c_p_l.html#ga75d80991a8f467e0d454c53a383ae7f9" title="Sets the type of storage used to store the raw data for a dataset.">H5Pset_layout()</a>, <a class="el" href="group___h5_s.html#gabc974bbc041538a1d3032729df2ddfc0" title="Retrieves a regular hyperslab selection.">H5Sget_regular_hyperslab()</a>, <a class="el" href="group___h5_s.html#ga8a5bc33fae4be442093329f2cfec3f49" title="Determines if a hyperslab selection is regular.">H5Sis_regular_hyperslab()</a>, <a class="el" href="group___h5_s.html#ga6adfdf1b95dc108a65bf66e97d38536d" title="Selects a hyperslab region to add to the current selected region.">H5Sselect_hyperslab()</a> </dd>
 <dd>
 VDS Functions: <a class="el" href="group___d_c_p_l.html#ga83dcce1ce110d1ff6eae0fb77d4a7c85" title="Gets the number of mappings for the virtual dataset.">H5Pget_virtual_count()</a>, <a class="el" href="group___d_c_p_l.html#gaf50620fd5d83dc9ca1e5c3f374c5a952" title="Gets the name of a source dataset used in the mapping.">H5Pget_virtual_dsetname()</a>, <a class="el" href="group___d_c_p_l.html#ga5c17780cc9a72a0f62d70f6138510afa" title="Gets the filename of a source dataset used in the mapping.">H5Pget_virtual_filename()</a>, <a class="el" href="group___d_a_p_l.html#ga9a48c80955877c20d53e8fd3f49a2995" title="Retrieves prefix applied to VDS source file paths.">H5Pget_virtual_prefix()</a>, <a class="el" href="group___d_a_p_l.html#ga833dfc6d9c87738c9d94b610e70a818f" title="Returns the maximum number of missing source files and/or datasets with the printf-style names when g...">H5Pget_virtual_printf_gap()</a>, <a class="el" href="group___d_c_p_l.html#ga8319e9386cdb9b3881a8b698edfc78fc" title="Gets a dataspace identifier for the selection within the source dataset used in the mapping.">H5Pget_virtual_srcspace()</a>, <a class="el" href="group___d_a_p_l.html#ga7173663654b085e8583ab609c988b47c" title="Retrieves the view of a virtual dataset accessed with dapl_id.">H5Pget_virtual_view()</a>, <a class="el" href="group___d_c_p_l.html#ga6425cabbc055b66e218b4728d6eb911d" title="Gets a dataspace identifier for the selection within the virtual dataset used in the mapping.">H5Pget_virtual_vspace()</a>, <a class="el" href="group___d_c_p_l.html#gadec895092dbbedb94f85d9cacf8924f5" title="Sets the mapping between virtual and source datasets.">H5Pset_virtual()</a>, <a class="el" href="group___d_a_p_l.html#ga6816e0de35a335f636922c3cd5569819" title="Sets prefix to be applied to VDS source file paths.">H5Pset_virtual_prefix()</a>, <a class="el" href="group___d_a_p_l.html#ga8bb25e402e860133b8af3715e429bacf" title="Sets the maximum number of missing source files and/or datasets with the printf-style names when gett...">H5Pset_virtual_printf_gap()</a>, <a class="el" href="group___d_a_p_l.html#gac65520e7cd7748f93d94c4a42abd01b4" title="Sets the view of the virtual dataset (VDS) to include or exclude missing mapped elements.">H5Pset_virtual_view()</a></dd></dl>
@@ -1113,7 +1132,9 @@ VDS Functions: <a class="el" href="group___d_c_p_l.html#ga83dcce1ce110d1ff6eae0f
 <dl class="section return"><dt>Returns</dt><dd>Returns the length of the filename if successful; otherwise returns a negative value.</dd></dl>
 <p><a class="el" href="group___d_c_p_l.html#ga5c17780cc9a72a0f62d70f6138510afa" title="Gets the filename of a source dataset used in the mapping.">H5Pget_virtual_filename()</a> takes the dataset creation property list for the virtual dataset, <code>dcpl_id</code>, the mapping index, <code>index</code>, the size of the filename for a source dataset, <code>size</code>, and retrieves the name of the file for a source dataset used in the mapping.</p>
 <p>Up to <code>size</code> characters of the filename are returned in <code>name</code>; additional characters, if any, are not returned to the user application.</p>
-<p>If the length of the filename, which determines the required value of <code>size</code>, is unknown, a preliminary call to <a class="el" href="group___d_c_p_l.html#ga5c17780cc9a72a0f62d70f6138510afa" title="Gets the filename of a source dataset used in the mapping.">H5Pget_virtual_filename()</a> with the last two parameters set to NULL and zero respectively can be made. The return value of this call will be the size in bytes of the filename. That value, plus 1 for a NULL terminator, must then be assigned to <code>size</code> for a second <a class="el" href="group___d_c_p_l.html#ga5c17780cc9a72a0f62d70f6138510afa" title="Gets the filename of a source dataset used in the mapping.">H5Pget_virtual_filename()</a> call, which will retrieve the actual filename.</p>
+<p>Up to <code>size</code> characters of the file name are returned in <code>name</code>; additional characters, if any, are not returned to the user application.<br  />
+<br  />
+ If the length of the file name, which determines the required value of <code>size</code>, is unknown, a preliminary call to <a class="el" href="group___d_c_p_l.html#ga5c17780cc9a72a0f62d70f6138510afa" title="Gets the filename of a source dataset used in the mapping.">H5Pget_virtual_filename()</a> with the last two parameters set to NULL and zero respectively can be made. The return value of this call will be the size in bytes of the file name. That value, plus 1 for a NULL terminator, must then be assigned to <code>size</code> for a second <a class="el" href="group___d_c_p_l.html#ga5c17780cc9a72a0f62d70f6138510afa" title="Gets the filename of a source dataset used in the mapping.">H5Pget_virtual_filename()</a> call, which will retrieve the actual file name.</p>
 <dl class="section see"><dt>See also</dt><dd>Supporting Functions: <a class="el" href="group___d_c_p_l.html#ga655530b0f40990507fedeef6b3068db3" title="Returns the layout of the raw data for a dataset.">H5Pget_layout()</a>, <a class="el" href="group___d_c_p_l.html#ga75d80991a8f467e0d454c53a383ae7f9" title="Sets the type of storage used to store the raw data for a dataset.">H5Pset_layout()</a>, <a class="el" href="group___h5_s.html#gabc974bbc041538a1d3032729df2ddfc0" title="Retrieves a regular hyperslab selection.">H5Sget_regular_hyperslab()</a>, <a class="el" href="group___h5_s.html#ga8a5bc33fae4be442093329f2cfec3f49" title="Determines if a hyperslab selection is regular.">H5Sis_regular_hyperslab()</a>, <a class="el" href="group___h5_s.html#ga6adfdf1b95dc108a65bf66e97d38536d" title="Selects a hyperslab region to add to the current selected region.">H5Sselect_hyperslab()</a> </dd>
 <dd>
 VDS Functions: <a class="el" href="group___d_c_p_l.html#ga83dcce1ce110d1ff6eae0fb77d4a7c85" title="Gets the number of mappings for the virtual dataset.">H5Pget_virtual_count()</a>, <a class="el" href="group___d_c_p_l.html#gaf50620fd5d83dc9ca1e5c3f374c5a952" title="Gets the name of a source dataset used in the mapping.">H5Pget_virtual_dsetname()</a>, <a class="el" href="group___d_c_p_l.html#ga5c17780cc9a72a0f62d70f6138510afa" title="Gets the filename of a source dataset used in the mapping.">H5Pget_virtual_filename()</a>, <a class="el" href="group___d_a_p_l.html#ga9a48c80955877c20d53e8fd3f49a2995" title="Retrieves prefix applied to VDS source file paths.">H5Pget_virtual_prefix()</a>, <a class="el" href="group___d_a_p_l.html#ga833dfc6d9c87738c9d94b610e70a818f" title="Returns the maximum number of missing source files and/or datasets with the printf-style names when g...">H5Pget_virtual_printf_gap()</a>, <a class="el" href="group___d_c_p_l.html#ga8319e9386cdb9b3881a8b698edfc78fc" title="Gets a dataspace identifier for the selection within the source dataset used in the mapping.">H5Pget_virtual_srcspace()</a>, <a class="el" href="group___d_a_p_l.html#ga7173663654b085e8583ab609c988b47c" title="Retrieves the view of a virtual dataset accessed with dapl_id.">H5Pget_virtual_view()</a>, <a class="el" href="group___d_c_p_l.html#ga6425cabbc055b66e218b4728d6eb911d" title="Gets a dataspace identifier for the selection within the virtual dataset used in the mapping.">H5Pget_virtual_vspace()</a>, <a class="el" href="group___d_c_p_l.html#gadec895092dbbedb94f85d9cacf8924f5" title="Sets the mapping between virtual and source datasets.">H5Pset_virtual()</a>, <a class="el" href="group___d_a_p_l.html#ga6816e0de35a335f636922c3cd5569819" title="Sets prefix to be applied to VDS source file paths.">H5Pset_virtual_prefix()</a>, <a class="el" href="group___d_a_p_l.html#ga8bb25e402e860133b8af3715e429bacf" title="Sets the maximum number of missing source files and/or datasets with the printf-style names when gett...">H5Pset_virtual_printf_gap()</a>, <a class="el" href="group___d_a_p_l.html#gac65520e7cd7748f93d94c4a42abd01b4" title="Sets the view of the virtual dataset (VDS) to include or exclude missing mapped elements.">H5Pset_virtual_view()</a></dd></dl>
@@ -1472,8 +1493,8 @@ See <a class="el" href="group___h5_d.html#ga0647ba4bbd26d5230cc07f3a5685b2cf">H5
 
 </div>
 </div>
-<a id="ga85ff7c9c827fa524041cd58c199b77b8" name="ga85ff7c9c827fa524041cd58c199b77b8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga85ff7c9c827fa524041cd58c199b77b8">&#9670;&#160;</a></span>H5Pset_external()</h2>
+<a id="ga64bf68bda464eaaabfe24846533b1935" name="ga64bf68bda464eaaabfe24846533b1935"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga64bf68bda464eaaabfe24846533b1935">&#9670;&#160;</a></span>H5Pset_external()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1493,7 +1514,7 @@ See <a class="el" href="group___h5_d.html#ga0647ba4bbd26d5230cc07f3a5685b2cf">H5
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">off_t&#160;</td>
+          <td class="paramtype"><a class="el" href="_h5public_8h.html#a7231b68f6d5811a693d4cbc937a34604">HDoff_t</a>&#160;</td>
           <td class="paramname"><em>offset</em>, </td>
         </tr>
         <tr>
@@ -1521,11 +1542,12 @@ See <a class="el" href="group___h5_d.html#ga0647ba4bbd26d5230cc07f3a5685b2cf">H5
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Returns a non-negative value if successful; otherwise, returns a negative value.</dd></dl>
-<p>The first call to <a class="el" href="group___d_c_p_l.html#ga85ff7c9c827fa524041cd58c199b77b8" title="Adds an external file to the list of external files.">H5Pset_external()</a> sets the external storage property in the property list, thus designating that the dataset will be stored in one or more non-HDF5 file(s) external to the HDF5 file. This call also adds the file <code>name</code> as the first file in the list of external files. Subsequent calls to the function add the named file as the next file in the list.</p>
+<p>The first call to <a class="el" href="group___d_c_p_l.html#ga64bf68bda464eaaabfe24846533b1935" title="Adds an external file to the list of external files.">H5Pset_external()</a> sets the external storage property in the property list, thus designating that the dataset will be stored in one or more non-HDF5 file(s) external to the HDF5 file. This call also adds the file <code>name</code> as the first file in the list of external files. Subsequent calls to the function add the named file as the next file in the list.</p>
 <p>If a dataset is split across multiple files, then the files should be defined in order. The total size of the dataset is the sum of the <code>size</code> arguments for all the external files. If the total size is larger than the size of a dataset then the dataset can be extended (provided the data space also allows the extending).</p>
 <p>The <code>size</code> argument specifies the number of bytes reserved for data in the external file. If <code>size</code> is set to <a class="el" href="_h5_fpublic_8h.html#a2a667df33694861e41d1b9eb3a55b373">H5F_UNLIMITED</a>, the external file can be of unlimited size and no more files can be added to the external files list. If <code>size</code> is set to 0 (zero), no external file will actually be created.</p>
-<p>All of the external files for a given dataset must be specified with <a class="el" href="group___d_c_p_l.html#ga85ff7c9c827fa524041cd58c199b77b8" title="Adds an external file to the list of external files.">H5Pset_external()</a> before <a class="el" href="group___h5_d.html#ga0647ba4bbd26d5230cc07f3a5685b2cf">H5Dcreate()</a> is called to create the dataset. If one these files does not exist on the system when <a class="el" href="group___h5_d.html#ga98f44998b67587662af8b0d8a0a75906" title="Writes raw data from a buffer to a dataset.">H5Dwrite()</a> is called to write data to it, the library will create the file.</p>
-<dl class="section note"><dt>Note</dt><dd>On Windows, off_t is typically a 32-bit signed long value, which limits the valid offset that can be set to 2 GiB.</dd></dl>
+<p>All of the external files for a given dataset must be specified with <a class="el" href="group___d_c_p_l.html#ga64bf68bda464eaaabfe24846533b1935" title="Adds an external file to the list of external files.">H5Pset_external()</a> before <a class="el" href="group___h5_d.html#ga0647ba4bbd26d5230cc07f3a5685b2cf">H5Dcreate()</a> is called to create the dataset. If one these files does not exist on the system when <a class="el" href="group___h5_d.html#ga98f44998b67587662af8b0d8a0a75906" title="Writes raw data from a buffer to a dataset.">H5Dwrite()</a> is called to write data to it, the library will create the file.</p>
+<dl class="section note"><dt>Note</dt><dd>In 1.14.x and earlier, the offset parameter was of type off_t, which is a 32-bit signed long value on Windows, which limited the valid offset that can be set to 2 GiB.</dd></dl>
+<dl class="section version"><dt>Version</dt><dd>1.16.0 <code>offset</code> parameter type changed to HDoff_t from off_t. </dd></dl>
 <dl class="section since"><dt>Since</dt><dd>1.0.0 </dd></dl>
 
 </div>
@@ -2010,13 +2032,13 @@ HDF5 always modifies the options mask provided by the user to set up usage of RA
 <tr>
 <td><code>"%%"</code> </td><td>Replaced with a single <code>"%"</code> (percent) character.  </td></tr>
 <tr>
-<td><code>"%&lt;d&gt;b"</code> </td><td>Where <code>"&lt;d&gt;"</code> is the virtual dataset dimension axis (0-based) and <code>"b"</code> indicates that the block count of the selection in that dimension should be used. The full expression (for example, <code>"%0b"</code>) is replaced with a single numeric value when the mapping is evaluated at VDS access time. Example code for many source and virtual dataset mappings is available in the "Examples of Source to Virtual Dataset Mapping" chapter in the <a href="https://docs.hdfgroup.org/hdf5/rfc/HDF5-VDS-requirements-use-cases-2014-12-10.pdf">RFC: HDF5 Virtual Dataset</a>.   </td></tr>
+<td><code>"%&lt;d&gt;b"</code> </td><td>Where <code>"&lt;d&gt;"</code> is the virtual dataset dimension axis (0-based) and <code>"b"</code> indicates that the block count of the selection in that dimension should be used. The full expression (for example, <code>"%0b"</code>) is replaced with a single numeric value when the mapping is evaluated at VDS access time. Example code for many source and virtual dataset mappings is available in the "Examples of Source to Virtual Dataset Mapping" chapter in the <a href="https://support.hdfgroup.org/releases/hdf5/documentation/rfc/HDF5-VDS-requirements-use-cases-2014-12-10.pdf">RFC: HDF5 Virtual Dataset</a>.   </td></tr>
 </table>
 If the printf form is used for the source file or dataset names, the selection in the source dataset's dataspace must be fixed-size.</dd></dl>
 <dl class="section user"><dt>Source File Resolutions:</dt><dd>When a source dataset residing in a different file is accessed, the library will search for the source file <code>src_file_name</code> as described below: <ul>
 <li>If <code>src_file_name</code> is a <code>"."</code> (period) then it refers to the file containing the virtual dataset. </li>
 <li>If <code>src_file_name</code> is a relative pathname, the following steps are performed:<ul>
-<li>The library will get the prefix(es) set in the environment variable <code>HDF5_VDS_PREFIX</code> and will try to prepend each prefix to <code>src_file_name</code> to form a new <code>src_file_name</code>. If the new <code>src_file_name</code> does not exist or if <code>HDF5_VDS_PREFIX</code> is not set, the library will get the prefix set via <a class="el" href="group___d_a_p_l.html#ga6816e0de35a335f636922c3cd5569819" title="Sets prefix to be applied to VDS source file paths.">H5Pset_virtual_prefix()</a> and prepend it to <code>src_file_name</code> to form a new <code>src_file_name</code>. If the new <code>src_file_name</code> does not exist or no prefix is being set by <a class="el" href="group___d_a_p_l.html#ga6816e0de35a335f636922c3cd5569819" title="Sets prefix to be applied to VDS source file paths.">H5Pset_virtual_prefix()</a> then the path of the file containing the virtual dataset is obtained. This path can be the absolute path or the current working directory plus the relative path of that file when it is created/opened. The library will prepend this path to <code>src_file_name</code> to form a new <code>src_file_name</code>.</li>
+<li>The library will get the <a class="el" href="h5dump_8h.html#ad2849cf781a4db22cc1b31eaaee50a4f">prefix(es)</a> set in the environment variable <code>HDF5_VDS_PREFIX</code> and will try to prepend each prefix to <code>src_file_name</code> to form a new <code>src_file_name</code>. If the new <code>src_file_name</code> does not exist or if <code>HDF5_VDS_PREFIX</code> is not set, the library will get the prefix set via <a class="el" href="group___d_a_p_l.html#ga6816e0de35a335f636922c3cd5569819" title="Sets prefix to be applied to VDS source file paths.">H5Pset_virtual_prefix()</a> and prepend it to <code>src_file_name</code> to form a new <code>src_file_name</code>. If the new <code>src_file_name</code> does not exist or no prefix is being set by <a class="el" href="group___d_a_p_l.html#ga6816e0de35a335f636922c3cd5569819" title="Sets prefix to be applied to VDS source file paths.">H5Pset_virtual_prefix()</a> then the path of the file containing the virtual dataset is obtained. This path can be the absolute path or the current working directory plus the relative path of that file when it is created/opened. The library will prepend this path to <code>src_file_name</code> to form a new <code>src_file_name</code>.</li>
 <li>If the new <code>src_file_name</code> does not exist, then the library will look for <code>src_file_name</code> and will return failure/success accordingly. </li>
 </ul>
 </li>
@@ -2043,7 +2065,7 @@ If the printf form is used for the source file or dataset names, the selection i
 </li>
 </ul>
 </dd></dl>
-<dl class="section see"><dt>See also</dt><dd><a href="https://docs.hdfgroup.org/hdf5/rfc/HDF5-VDS-requirements-use-cases-2014-12-10.pdf">Virtual Dataset Overview</a></dd>
+<dl class="section see"><dt>See also</dt><dd><a href="https://support.hdfgroup.org/releases/hdf5/documentation/rfc/HDF5-VDS-requirements-use-cases-2014-12-10.pdf">Virtual Dataset Overview</a></dd>
 <dd>
 Supporting Functions: <a class="el" href="group___d_c_p_l.html#ga655530b0f40990507fedeef6b3068db3" title="Returns the layout of the raw data for a dataset.">H5Pget_layout()</a>, <a class="el" href="group___d_c_p_l.html#ga75d80991a8f467e0d454c53a383ae7f9" title="Sets the type of storage used to store the raw data for a dataset.">H5Pset_layout()</a>, <a class="el" href="group___h5_s.html#gabc974bbc041538a1d3032729df2ddfc0" title="Retrieves a regular hyperslab selection.">H5Sget_regular_hyperslab()</a>, <a class="el" href="group___h5_s.html#ga8a5bc33fae4be442093329f2cfec3f49" title="Determines if a hyperslab selection is regular.">H5Sis_regular_hyperslab()</a>, <a class="el" href="group___h5_s.html#ga6adfdf1b95dc108a65bf66e97d38536d" title="Selects a hyperslab region to add to the current selected region.">H5Sselect_hyperslab()</a> </dd>
 <dd>
