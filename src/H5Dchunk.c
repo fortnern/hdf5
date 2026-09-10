@@ -317,16 +317,18 @@ typedef struct H5D_threaded_chunk_info_t {
 
 /* Dataset-global information about an internally concurrent operation */
 typedef struct H5D_threaded_io_info_t {
-    H5D_threaded_chunk_info_t *chunk_info;   /* Array of info structs for each chunk */
-    H5D_dset_io_info_t        *dset_info;    /* Dataset I/O info */
-    H5D_io_info_t              cpt_io_info;  /* I/O info struct for memory scatter */
-    size_t                     num_chunks;   /* Number of chunks in concurrent operation */
-    size_t                     chunk_nalloc; /* Allocated size of chunk_info array */
-    size_t                     chunk_size;   /* Size of an unfiltered chunk */
-    H5TS_semaphore_t           sem;          /* Semaphore for waiting on threads */
-    bool                       sem_init;     /* Whether the semaphore has been initialized */
-    bool                       failed;       /* Whether any threads failed */
-    hid_t                      dxpl_id;      /* Dataset transfer property list ID */
+    H5D_threaded_chunk_info_t *chunk_info;    /* Array of info structs for each chunk */
+    H5D_dset_io_info_t        *dset_info;     /* Dataset I/O info */
+    H5D_io_info_t              cpt_io_info;   /* I/O info struct for memory scatter */
+    size_t                     num_chunks;    /* Number of chunks in concurrent operation */
+    size_t                     chunk_nalloc;  /* Allocated size of chunk_info array */
+    size_t                     chunk_size;    /* Size of an unfiltered chunk */
+    size_t                     chunks_left;   /* Number of chunks left to process */
+    bool                       chunks_locked; /* Whether any chunks are locked */
+    H5TS_cond_t                cond;          /* Condition variable for waiting on threads */
+    H5TS_mutex_t               cond_mutex;    /* Mutex associated with cond */
+    bool                       failed;        /* Whether any threads failed */
+    hid_t                      dxpl_id;       /* Dataset transfer property list ID */
 } H5D_threaded_io_info_t;
 #endif /* H5_HAVE_CONCURRENCY */
 
@@ -2951,10 +2953,9 @@ H5D__chunk_read(H5D_io_info_t *io_info, H5D_dset_io_info_t *dset_info)
     bool               chunk_locked = false;        /* Indicates whether the chunk is locked */
     H5D_chunk_ud_t     udata;                       /* Chunk index pass-through    */
 #ifdef H5_HAVE_CONCURRENCY
-    H5D_threaded_io_info_t *threaded_io_info  = NULL; /* Info for concurrent threaded execution */
-    unsigned                threads_in_flight = 0;    /* Number of threads currently executing */
-#endif                                                /* H5_HAVE_CONCURRENCY */
-    herr_t ret_value = SUCCEED;                       /*return value        */
+    H5D_threaded_io_info_t *threaded_io_info = NULL; /* Info for concurrent threaded execution */
+#endif                                               /* H5_HAVE_CONCURRENCY */
+    herr_t ret_value = SUCCEED;                      /*return value        */
 
     FUNC_ENTER_PACKAGE
 
@@ -3314,6 +3315,7 @@ H5D__chunk_read(H5D_io_info_t *io_info, H5D_dset_io_info_t *dset_info)
                         threaded_io_info->chunk_info[threaded_io_info->num_chunks].chunk = chunk;
                         chunk                                                            = NULL;
                         chunk_locked                                                     = false;
+                        threaded_io_info->chunks_locked                                  = true;
                         threaded_io_info->chunk_info[threaded_io_info->num_chunks].threaded_io_info =
                             threaded_io_info;
                         H5MM_memcpy(
@@ -3373,14 +3375,26 @@ H5D__chunk_read(H5D_io_info_t *io_info, H5D_dset_io_info_t *dset_info)
             assert(threaded_io_info->chunk_info);
 
             if (threaded_io_info->num_chunks > 0) {
+                size_t threads_launched = 0;
+
                 assert(do_threading);
                 assert(H5TS_pool_g);
 
-                /* Create semaphore for completed tasks */
-                if (H5_UNLIKELY(H5TS_semaphore_init(&threaded_io_info->sem, 0) < 0))
-                    HGOTO_ERROR(H5E_DATASET, H5E_CANTINIT, FAIL,
-                                "can't create semaphore for completed tasks");
-                threaded_io_info->sem_init = true;
+                /* Create condition variable for signaling task completion */
+                if (H5_UNLIKELY(H5TS_cond_init(&threaded_io_info->cond) < 0))
+                    HGOTO_ERROR(H5E_DATASET, H5E_CANTINIT, FAIL, "can't create condition variable for completed tasks");
+
+                /* Create mutex for condition variable */
+                if (H5_UNLIKELY(H5TS_mutex_init(&threaded_io_info->cond_mutex, H5TS_MUTEX_TYPE_PLAIN) < 0)) {
+                    if (H5TS_cond_destroy(&threaded_io_info->cond) < 0)
+                        HDONE_ERROR(H5E_DATASET, H5E_CANTFREE, FAIL, "can't destroy condition variable");
+                    HGOTO_ERROR(H5E_DATASET, H5E_CANTINIT, FAIL, "can't create mutex for completed tasks");
+                }
+
+                /* Defer errors from now until the end of this block, to minimize cleanup code needed in the done section */
+
+                /* Store number of threads launched */
+                threaded_io_info->chunks_left = threaded_io_info->num_chunks;
 
                 /* Mark that we are concurrent */
                 H5TS_currently_concurrent_g = true;
@@ -3388,21 +3402,39 @@ H5D__chunk_read(H5D_io_info_t *io_info, H5D_dset_io_info_t *dset_info)
                 /* Loop over threaded chunks, launching worker task function for each */
                 for (size_t i = 0; i < threaded_io_info->num_chunks; i++) {
                     if (H5_UNLIKELY(H5TS_pool_add_task(H5TS_pool_g, H5D__chunk_thread_read,
-                                                       &(threaded_io_info->chunk_info[i])) < 0))
-                        HGOTO_ERROR(H5E_DATASET, H5E_CANTINIT, FAIL, "can't launch worker thread");
-                    threads_in_flight++;
+                                                       &(threaded_io_info->chunk_info[i])) < 0)) {
+                        HDONE_ERROR(H5E_DATASET, H5E_CANTINIT, FAIL, "can't launch worker thread");
+                        break;
+                    }
+                    threads_launched++;
                 }
 
-                /* Wait for all worker tasks to complete */
-                assert(threads_in_flight);
-                do {
-                    if (H5_UNLIKELY(H5TS_semaphore_wait(&threaded_io_info->sem) < 0))
-                        HGOTO_ERROR(H5E_DATASET, H5E_CANTWAIT, FAIL, "can't wait for worker thread");
-                    threads_in_flight--;
-                } while (threads_in_flight);
+                /* Acquire cond_mutex so the signal for task completion doesn't get sent before we start waiting on it */
+                if (H5_UNLIKELY(H5TS_mutex_lock(&threaded_io_info->cond_mutex) < 0))
+                    HDONE_ERROR(H5E_DATASET, H5E_CANTLOCK, FAIL, "can't lock mutex for condition variable");
+
+                /* If we failed, subtract any unlaunched threads from chunks_left */
+                if (H5_UNLIKELY(ret_value < 0)) {
+                    assert(threaded_io_info->num_chunks >= threads_launched);
+                    threaded_io_info->chunks_left -= threaded_io_info->num_chunks - threads_launched;
+                }
+                else
+                    assert(threaded_io_info->num_chunks == threads_launched);
+
+                /* Wait on condition variable for all worker tasks to complete */
+                while (threaded_io_info->chunks_left) {
+                    if (H5_UNLIKELY(H5TS_cond_wait(&threaded_io_info->cond, &threaded_io_info->cond_mutex) < 0)) {
+                        HDONE_ERROR(H5E_DATASET, H5E_CANTWAIT, FAIL, "can't wait for worker threads");
+                        break;
+                    }
+                }
 
                 /* Mark that we are no longer concurrent */
                 H5TS_currently_concurrent_g = false;
+
+                /* Unlock cond_mutex */
+                if (H5_UNLIKELY(H5TS_mutex_unlock(&threaded_io_info->cond_mutex) < 0))
+                    HDONE_ERROR(H5E_DATASET, H5E_CANTUNLOCK, FAIL, "can't unlock mutex for condition variable");
 
                 /* Unlock all chunks */
                 for (size_t i = 0; i < threaded_io_info->num_chunks; i++) {
@@ -3410,22 +3442,35 @@ H5D__chunk_read(H5D_io_info_t *io_info, H5D_dset_io_info_t *dset_info)
                             H5D__chunk_unlock(io_info, dset_info, &threaded_io_info->chunk_info[i].udata,
                                               false, threaded_io_info->chunk_info[i].chunk,
                                               threaded_io_info->chunk_info[i].src_accessed_bytes) < 0))
-                        HGOTO_ERROR(H5E_DATASET, H5E_CANTUNLOCK, FAIL, "unable to unlock raw data chunk");
+                        HDONE_ERROR(H5E_DATASET, H5E_CANTUNLOCK, FAIL, "unable to unlock raw data chunk");
                     threaded_io_info->chunk_info[i].chunk = NULL;
+                }
+                threaded_io_info->chunks_locked = false;
+
+                /* Check for thread failure */
+                if (H5_UNLIKELY(threaded_io_info->failed)) {
+                    HDONE_ERROR(H5E_DATASET, H5E_READERROR, FAIL, "threaded read worker(s) failed");
+
+                    /* We must evict all chunks if a worker failed, because the chunk may be in an inconsistent state in
+                     * memory */
+                    for (size_t i = 0; i < threaded_io_info->num_chunks; i++)
+                        if (H5D__chunk_cache_evict(dset_info->dset, dset_info->dset->shared->cache.chunk.slot[udata.idx_hint], false) < 0)
+                            HDONE_ERROR(H5E_DATASET, H5E_CANTREMOVE, FAIL, "unable to evict chunk");
                 }
 
                 /* Prune chunk cache to maximum size */
-                if (H5D__chunk_cache_prune(dset_info->dset, 0) < 0)
-                    HGOTO_ERROR(H5E_DATASET, H5E_CANTFREE, FAIL, "unable to preempt chunk(s) from cache");
+                if (H5_UNLIKELY(H5D__chunk_cache_prune(dset_info->dset, 0) < 0))
+                    HDONE_ERROR(H5E_DATASET, H5E_CANTFREE, FAIL, "unable to preempt chunk(s) from cache");
 
-                /* Destroy semaphore */
-                if (H5TS_semaphore_destroy(&threaded_io_info->sem) < 0)
-                    HGOTO_ERROR(H5E_DATASET, H5E_CANTFREE, FAIL, "can't destroy semaphore");
-                threaded_io_info->sem_init = false;
+                /* Destroy condition variable and mutex */
+                if (H5_UNLIKELY(H5TS_mutex_destroy(&threaded_io_info->cond_mutex) < 0))
+                    HDONE_ERROR(H5E_DATASET, H5E_CANTFREE, FAIL, "can't destroy mutex for condition variable");
+                if (H5_UNLIKELY(H5TS_cond_destroy(&threaded_io_info->cond) < 0))
+                    HDONE_ERROR(H5E_DATASET, H5E_CANTFREE, FAIL, "can't destroy condition variable");
 
-                /* Check for failure */
-                if (threaded_io_info->failed)
-                    HGOTO_ERROR(H5E_DATASET, H5E_READERROR, FAIL, "threaded read worker(s) failed");
+                /* Check for failure (not technically necessary right now, but include in case anything gets added after this) */
+                if (H5_UNLIKELY(ret_value < 0))
+                    HGOTO_DONE(ret_value);
             }
 
             /* Free chunk_info array */
@@ -3466,20 +3511,9 @@ done:
         }
 
 #ifdef H5_HAVE_CONCURRENCY
-        /* Free threaded I/O info struct */
         if (threaded_io_info) {
-            /* Wait for any threads to finish */
-            while (threads_in_flight) {
-                if (H5TS_semaphore_wait(&threaded_io_info->sem) < 0)
-                    HDONE_ERROR(H5E_DATASET, H5E_CANTWAIT, FAIL, "can't wait for worker thread");
-                threads_in_flight--;
-            }
-
-            /* Mark that we are no longer concurrent */
-            H5TS_currently_concurrent_g = false;
-
-            /* Unlock all chunks */
-            if (threaded_io_info->chunk_info)
+            if (threaded_io_info->chunk_info && threaded_io_info->chunks_locked) {
+                /* Unlock all chunks */
                 for (size_t i = 0; i < threaded_io_info->num_chunks; i++)
                     if (threaded_io_info->chunk_info[i].chunk &&
                         H5D__chunk_unlock(io_info, dset_info, &threaded_io_info->chunk_info[i].udata, false,
@@ -3487,10 +3521,10 @@ done:
                                           threaded_io_info->chunk_info[i].src_accessed_bytes) < 0)
                         HDONE_ERROR(H5E_DATASET, H5E_CANTUNLOCK, FAIL, "unable to unlock raw data chunk");
 
-            /* Destroy semaphore */
-            if (threaded_io_info->sem_init)
-                if (H5TS_semaphore_destroy(&threaded_io_info->sem) < 0)
-                    HDONE_ERROR(H5E_DATASET, H5E_CANTFREE, FAIL, "can't destroy semaphore");
+                /* Prune chunk cache to maximum size */
+                if (H5D__chunk_cache_prune(dset_info->dset, 0) < 0)
+                    HDONE_ERROR(H5E_DATASET, H5E_CANTFREE, FAIL, "unable to preempt chunk(s) from cache");
+            }
 
             /* Free chunk_info array */
             H5MM_xfree(threaded_io_info->chunk_info);
@@ -3509,7 +3543,6 @@ done:
     assert(!chunk);
 #ifdef H5_HAVE_CONCURRENCY
     assert(!threaded_io_info);
-    assert(!threads_in_flight);
     assert(!H5TS_currently_concurrent_g);
 #endif /* H5_HAVE_CONCURRENCY */
 
@@ -3562,9 +3595,9 @@ H5D__chunk_thread_read(void *_threaded_chunk_info)
     mutex_held = true;
 
     /* Read chunk from disk */
-    if (H5F_shared_block_read(H5F_SHARED(threaded_chunk_info->chk_dset_io_info.dset->oloc.file),
+    if (H5_UNLIKELY(H5F_shared_block_read(H5F_SHARED(threaded_chunk_info->chk_dset_io_info.dset->oloc.file),
                               H5FD_MEM_DRAW, threaded_chunk_info->udata.chunk_block.offset,
-                              threaded_chunk_info->udata.chunk_block.length, threaded_chunk_info->chunk) < 0)
+                              threaded_chunk_info->udata.chunk_block.length, threaded_chunk_info->chunk) < 0))
         HGOTO_ERROR(H5E_IO, H5E_READERROR, FAIL, "unable to read raw data chunk");
 
     /* Unlock internal mutex */
@@ -3588,9 +3621,9 @@ H5D__chunk_thread_read(void *_threaded_chunk_info)
 
         /* Retrieve filter settings from API context. These must be protected by a mutex if using a
          * non-default DXPL. */
-        if (H5CX_get_err_detect(&err_detect) < 0)
+        if (H5_UNLIKELY(H5CX_get_err_detect(&err_detect) < 0))
             HGOTO_ERROR(H5E_DATASET, H5E_CANTGET, FAIL, "can't get error detection info");
-        if (H5CX_get_filter_cb(&filter_cb) < 0)
+        if (H5_UNLIKELY(H5CX_get_filter_cb(&filter_cb) < 0))
             HGOTO_ERROR(H5E_DATASET, H5E_CANTGET, FAIL, "can't get I/O filter callback function");
 
         /* Perform filter pipeline. Defer going to done on error so the chunk cache is always patched. */
@@ -3619,7 +3652,7 @@ H5D__chunk_thread_read(void *_threaded_chunk_info)
         }
 
         /* Now goto done if the call to H5Z_pipeline() failed */
-        if (ret_value < 0)
+        if (H5_UNLIKELY(ret_value < 0))
             HGOTO_DONE(ret_value);
 
         /* Make sure the chunk is the correct size after being unfiltered */
@@ -3661,27 +3694,55 @@ H5D__chunk_thread_read(void *_threaded_chunk_info)
 
 done:
     /* Report failure to task invoker (actual return value is ignored by the thread pool) */
-    if (ret_value < 0) {
+    if (H5_UNLIKELY(ret_value < 0))
         threaded_chunk_info->threaded_io_info->failed = true;
-        if (mutex_held && H5TS_internal_unlock() < 0)
-            HDONE_ERROR(H5E_DATASET, H5E_CANTUNLOCK, FAIL, "can't unlock internal mutex");
-        mutex_held = false;
+
+    /* Acquire condition variable mutex */
+    if (H5_UNLIKELY(H5TS_mutex_lock(&threaded_chunk_info->threaded_io_info->cond_mutex) < 0))
+        HDONE_ERROR(H5E_DATASET, H5E_CANTLOCK, FAIL, "can't lock mutex for condition variable");
+
+    /* Decrement the number of chunks left, and signal the main thread if this was the last */
+    if (1 == threaded_chunk_info->threaded_io_info->chunks_left--)
+        /* Signal condition variable */
+        if (H5_UNLIKELY(H5TS_cond_signal(&threaded_chunk_info->threaded_io_info->cond) < 0))
+            HDONE_ERROR(H5E_DATASET, H5E_CANTLOCK, FAIL, "can't signal condition variable");
+
+    /* Unlock condition variable mutex */
+    if (H5_UNLIKELY(H5TS_mutex_unlock(&threaded_chunk_info->threaded_io_info->cond_mutex) < 0))
+        HDONE_ERROR(H5E_DATASET, H5E_CANTUNLOCK, FAIL, "can't unlock mutex for condition variable");
+
+    /* Handle failures */
+    if (H5_UNLIKELY(ret_value < 0)) {
+        /* Set failed again in case something failed in the cond_signal block. This is best effort, it's possible at this point for the main thread to race ahead and not see the failure. */
+        threaded_chunk_info->threaded_io_info->failed = true;
+
+        /* Clean up */
         if (api_ctx_pushed && H5CX_pop(false) < 0)
             HDONE_ERROR(H5E_SYM, H5E_CANTRESET, FAIL, "can't reset API context");
         api_ctx_pushed = false;
+
+        /* Acquire mutex */
+        if (!mutex_held) {
+            if (H5TS_internal_lock() < 0)
+                HDONE_ERROR(H5E_DATASET, H5E_CANTLOCK, FAIL, "can't lock internal mutex");
+            else
+                mutex_held = true;
+        }
+
+        /* Print and clear error stack */
         (void)H5E_dump_api_stack();
         (void)H5E_clear_stack();
+
+        /* Release mutex */
+        if (mutex_held) {
+            if (H5TS_internal_unlock() < 0)
+                HDONE_ERROR(H5E_DATASET, H5E_CANTUNLOCK, FAIL, "can't unlock internal mutex");
+            mutex_held = false;
+        }
     }
 
     assert(!mutex_held);
     assert(!api_ctx_pushed);
-
-    /* Signal the semaphore to indicate that we've finished processing one chunk */
-    if (H5_UNLIKELY(H5TS_semaphore_signal(&threaded_chunk_info->threaded_io_info->sem) < 0)) {
-        HDONE_ERROR(H5E_DATASET, H5E_CANTUNLOCK, FAIL, "can't signal semaphore");
-        (void)H5E_dump_api_stack();
-        (void)H5E_clear_stack();
-    }
 
     FUNC_LEAVE_NOAPI((H5TS_thread_ret_t)0);
 } /* end H5D__chunk_thread_read() */

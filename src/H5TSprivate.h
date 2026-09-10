@@ -294,10 +294,10 @@ typedef atomic_flag H5TS_spinlock_t;
 /* Library-private Variables */
 /*****************************/
 
+#ifdef H5_HAVE_CONCURRENCY
 /* Global thread pool */
 extern H5TS_pool_t *H5TS_pool_g;
 
-#ifdef H5_HAVE_CONCURRENCY
 /* Whether there are concurrent threads in the library (from internal spawning) */
 extern bool H5TS_currently_concurrent_g;
 #endif /* H5_HAVE_CONCURRENCY */

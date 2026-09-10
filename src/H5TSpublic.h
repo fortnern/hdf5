@@ -80,6 +80,10 @@ extern "C" {
  *
  * \note    This function is only present when the library is compiled with HDF5_ENABLE_CONCURRENCY=ON.
  *
+ * \note    Use of this function may increase memory usage during concurrent
+ *          operations due to the need to maintain state for each thread
+ *          simultaneously.
+ *
  * \warning Errors that are printed inside the threaded area, for example by the
  *          data filters, do not currently respect non-default error settings,
  *          and print their errors to stderr upon thread completion.

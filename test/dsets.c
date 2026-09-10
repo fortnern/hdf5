@@ -19485,7 +19485,7 @@ test_threaded_chunks(void)
         TEST_ERROR;
 
     /* Create the dataset */
-    if ((dataset = H5Dcreate2(file, "dset", H5T_NATIVE_INT, space, H5P_DEFAULT, H5P_DEFAULT, H5P_DEFAULT)) <
+    if ((dataset = H5Dcreate2(file, "dset", H5T_NATIVE_INT, space, H5P_DEFAULT, dcpl, H5P_DEFAULT)) <
         0)
         TEST_ERROR;
     if (H5Dclose(dataset) < 0)
@@ -19970,6 +19970,12 @@ main(void)
 
     /* Verify that source file/dataset names are shared properly */
     nerrors += (test_vds_shared_strings(fapl) < 0 ? 1 : 0);
+
+#ifdef H5_HAVE_CONCURRENCY
+    /* Set threading now to ensure the library can shut down cleanly with threading enabled */
+    if (H5TSset_internal_threads(4) < 0)
+        TEST_ERROR;
+#endif /* H5_HAVE_CONCURRENCY */
 
     if (nerrors)
         goto error;

@@ -158,8 +158,7 @@ done:
  *              all threads.
  *
  * Note:     This function is currently registered via atexit() and is called
- *              AFTER H5_term_library(). H5TS_top_term_package() is called at library
- *              termination to clean up per-thread resources.
+ *              AFTER H5_term_library().
  *
  * Return:    void
  *
@@ -168,6 +167,8 @@ done:
 void
 H5TS_term_package(void)
 {
+    H5TS_tinfo_node_t *tinfo_node;
+
     FUNC_ENTER_NOAPI_NOINIT_NOERR
 
     /* Reset global API lock info */
@@ -178,14 +179,13 @@ H5TS_term_package(void)
 #endif
     H5TS_atomic_destroy_uint(&H5TS_api_info_p.attempt_lock_count);
 
-#ifdef H5_HAVE_CONCURRENCY
-    /* Destroy global thread pool if it exists */
-    if (H5TS_pool_g) {
-        (void)H5TS_pool_destroy(H5TS_pool_g);
-        H5TS_pool_g                 = NULL;
-        H5TS_global_pool_nthreads_g = 0;
-    }
-#endif /* H5_HAVE_CONCURRENCY */
+    /* Check if info for thread has been created, free it if so */
+    (void)H5TS_key_get_value(H5TS_thrd_info_key_g, (void **)&tinfo_node);
+    if (tinfo_node)
+        H5TS__tinfo_destroy(tinfo_node);
+
+    /* Clean up per-thread library info */
+    H5TS__tinfo_term();
 
     FUNC_LEAVE_NOAPI_VOID
 } /* end H5TS_term_package() */
@@ -891,9 +891,7 @@ H5TS__tinfo_destroy(void *_tinfo_node)
 /*--------------------------------------------------------------------------
  * Function:    H5TS_top_term_package
  *
- * Purpose:     Terminate the threadlocal parts of the H5TS interface during library terminaton.
- *
- * Note:        See H5TS_term_package for termination of the thread-global resources
+ * Purpose:     Terminate the parts of the H5TS interface that can or must be done early during library terminaton.
  *
  * Return:      Non-negative on success / Negative on failure
  *
@@ -906,8 +904,13 @@ H5TS_top_term_package(void)
 
     FUNC_ENTER_NOAPI_NOINIT_NOERR
 
-    /* Clean up per-thread library info */
-    H5TS__tinfo_term();
+#ifdef H5_HAVE_CONCURRENCY
+    /* Destroy global thread pool if it exists */
+    if (H5TS_pool_g) {
+        (void)H5TS_pool_destroy(H5TS_pool_g);
+        H5TS_pool_g = NULL;
+    }
+#endif /* H5_HAVE_CONCURRENCY */
 
     FUNC_LEAVE_NOAPI(n)
 }
