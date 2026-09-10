@@ -19485,8 +19485,7 @@ test_threaded_chunks(void)
         TEST_ERROR;
 
     /* Create the dataset */
-    if ((dataset = H5Dcreate2(file, "dset", H5T_NATIVE_INT, space, H5P_DEFAULT, dcpl, H5P_DEFAULT)) <
-        0)
+    if ((dataset = H5Dcreate2(file, "dset", H5T_NATIVE_INT, space, H5P_DEFAULT, dcpl, H5P_DEFAULT)) < 0)
         TEST_ERROR;
     if (H5Dclose(dataset) < 0)
         TEST_ERROR;

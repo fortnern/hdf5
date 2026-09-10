@@ -891,7 +891,8 @@ H5TS__tinfo_destroy(void *_tinfo_node)
 /*--------------------------------------------------------------------------
  * Function:    H5TS_top_term_package
  *
- * Purpose:     Terminate the parts of the H5TS interface that can or must be done early during library terminaton.
+ * Purpose:     Terminate the parts of the H5TS interface that can or must be done early during library
+ *terminaton.
  *
  * Return:      Non-negative on success / Negative on failure
  *

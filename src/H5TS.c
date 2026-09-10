@@ -62,7 +62,7 @@ H5TS_api_info_t H5TS_api_info_p;
 
 #ifdef H5_HAVE_CONCURRENCY
 /* Global thread pool */
-H5TS_pool_t *H5TS_pool_g                 = NULL;
+H5TS_pool_t *H5TS_pool_g = NULL;
 
 /* Whether there are concurrent threads in the library (from internal spawning) */
 bool H5TS_currently_concurrent_g = false;
@@ -189,11 +189,12 @@ H5TSset_internal_threads(unsigned num_threads)
 
     /* Check if the pool already exists, destroy it if so */
     if (H5TS_pool_g) {
-        /* Check if the pool alread yhas requested number of threads, if so we're done */
+        /* Check if the pool already has requested number of threads, if so we're done */
         if (num_threads == H5TS_pool_g->num_threads)
             HGOTO_DONE(SUCCEED);
 
-        /* Otherwise, destroy the pool (will recreate with the requested number of threads in the next step) */
+        /* Otherwise, destroy the pool (will recreate with the requested number of threads in the next step)
+         */
         if (H5TS_pool_destroy(H5TS_pool_g) < 0)
             HGOTO_ERROR(H5E_LIB, H5E_CANTFREE, FAIL, "can't destroy thread pool");
         H5TS_pool_g = NULL;

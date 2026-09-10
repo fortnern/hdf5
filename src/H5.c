@@ -402,7 +402,7 @@ H5_term_library(void)
             pending += DOWN(T_top);
 #ifdef H5_HAVE_THREADSAFE_API
             pending += DOWN(TS_top);
-#endif /* H5_HAVE_THREADSAFE_API */
+#endif    /* H5_HAVE_THREADSAFE_API */
         } /* end if */
 
         /* Don't shut down the file code until objects in files are shut down */

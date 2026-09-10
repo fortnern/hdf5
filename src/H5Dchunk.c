@@ -3382,7 +3382,8 @@ H5D__chunk_read(H5D_io_info_t *io_info, H5D_dset_io_info_t *dset_info)
 
                 /* Create condition variable for signaling task completion */
                 if (H5_UNLIKELY(H5TS_cond_init(&threaded_io_info->cond) < 0))
-                    HGOTO_ERROR(H5E_DATASET, H5E_CANTINIT, FAIL, "can't create condition variable for completed tasks");
+                    HGOTO_ERROR(H5E_DATASET, H5E_CANTINIT, FAIL,
+                                "can't create condition variable for completed tasks");
 
                 /* Create mutex for condition variable */
                 if (H5_UNLIKELY(H5TS_mutex_init(&threaded_io_info->cond_mutex, H5TS_MUTEX_TYPE_PLAIN) < 0)) {
@@ -3391,7 +3392,8 @@ H5D__chunk_read(H5D_io_info_t *io_info, H5D_dset_io_info_t *dset_info)
                     HGOTO_ERROR(H5E_DATASET, H5E_CANTINIT, FAIL, "can't create mutex for completed tasks");
                 }
 
-                /* Defer errors from now until the end of this block, to minimize cleanup code needed in the done section */
+                /* Defer errors from now until the end of this block, to minimize cleanup code needed in the
+                 * done section */
 
                 /* Store number of threads launched */
                 threaded_io_info->chunks_left = threaded_io_info->num_chunks;
@@ -3409,7 +3411,8 @@ H5D__chunk_read(H5D_io_info_t *io_info, H5D_dset_io_info_t *dset_info)
                     threads_launched++;
                 }
 
-                /* Acquire cond_mutex so the signal for task completion doesn't get sent before we start waiting on it */
+                /* Acquire cond_mutex so the signal for task completion doesn't get sent before we start
+                 * waiting on it */
                 if (H5_UNLIKELY(H5TS_mutex_lock(&threaded_io_info->cond_mutex) < 0))
                     HDONE_ERROR(H5E_DATASET, H5E_CANTLOCK, FAIL, "can't lock mutex for condition variable");
 
@@ -3423,7 +3426,8 @@ H5D__chunk_read(H5D_io_info_t *io_info, H5D_dset_io_info_t *dset_info)
 
                 /* Wait on condition variable for all worker tasks to complete */
                 while (threaded_io_info->chunks_left) {
-                    if (H5_UNLIKELY(H5TS_cond_wait(&threaded_io_info->cond, &threaded_io_info->cond_mutex) < 0)) {
+                    if (H5_UNLIKELY(H5TS_cond_wait(&threaded_io_info->cond, &threaded_io_info->cond_mutex) <
+                                    0)) {
                         HDONE_ERROR(H5E_DATASET, H5E_CANTWAIT, FAIL, "can't wait for worker threads");
                         break;
                     }
@@ -3434,7 +3438,8 @@ H5D__chunk_read(H5D_io_info_t *io_info, H5D_dset_io_info_t *dset_info)
 
                 /* Unlock cond_mutex */
                 if (H5_UNLIKELY(H5TS_mutex_unlock(&threaded_io_info->cond_mutex) < 0))
-                    HDONE_ERROR(H5E_DATASET, H5E_CANTUNLOCK, FAIL, "can't unlock mutex for condition variable");
+                    HDONE_ERROR(H5E_DATASET, H5E_CANTUNLOCK, FAIL,
+                                "can't unlock mutex for condition variable");
 
                 /* Unlock all chunks */
                 for (size_t i = 0; i < threaded_io_info->num_chunks; i++) {
@@ -3451,10 +3456,12 @@ H5D__chunk_read(H5D_io_info_t *io_info, H5D_dset_io_info_t *dset_info)
                 if (H5_UNLIKELY(threaded_io_info->failed)) {
                     HDONE_ERROR(H5E_DATASET, H5E_READERROR, FAIL, "threaded read worker(s) failed");
 
-                    /* We must evict all chunks if a worker failed, because the chunk may be in an inconsistent state in
-                     * memory */
+                    /* We must evict all chunks if a worker failed, because the chunk may be in an
+                     * inconsistent state in memory */
                     for (size_t i = 0; i < threaded_io_info->num_chunks; i++)
-                        if (H5D__chunk_cache_evict(dset_info->dset, dset_info->dset->shared->cache.chunk.slot[udata.idx_hint], false) < 0)
+                        if (H5D__chunk_cache_evict(dset_info->dset,
+                                                   dset_info->dset->shared->cache.chunk.slot[udata.idx_hint],
+                                                   false) < 0)
                             HDONE_ERROR(H5E_DATASET, H5E_CANTREMOVE, FAIL, "unable to evict chunk");
                 }
 
@@ -3464,11 +3471,13 @@ H5D__chunk_read(H5D_io_info_t *io_info, H5D_dset_io_info_t *dset_info)
 
                 /* Destroy condition variable and mutex */
                 if (H5_UNLIKELY(H5TS_mutex_destroy(&threaded_io_info->cond_mutex) < 0))
-                    HDONE_ERROR(H5E_DATASET, H5E_CANTFREE, FAIL, "can't destroy mutex for condition variable");
+                    HDONE_ERROR(H5E_DATASET, H5E_CANTFREE, FAIL,
+                                "can't destroy mutex for condition variable");
                 if (H5_UNLIKELY(H5TS_cond_destroy(&threaded_io_info->cond) < 0))
                     HDONE_ERROR(H5E_DATASET, H5E_CANTFREE, FAIL, "can't destroy condition variable");
 
-                /* Check for failure (not technically necessary right now, but include in case anything gets added after this) */
+                /* Check for failure (not technically necessary right now, but include in case anything gets
+                 * added after this) */
                 if (H5_UNLIKELY(ret_value < 0))
                     HGOTO_DONE(ret_value);
             }
@@ -3596,8 +3605,9 @@ H5D__chunk_thread_read(void *_threaded_chunk_info)
 
     /* Read chunk from disk */
     if (H5_UNLIKELY(H5F_shared_block_read(H5F_SHARED(threaded_chunk_info->chk_dset_io_info.dset->oloc.file),
-                              H5FD_MEM_DRAW, threaded_chunk_info->udata.chunk_block.offset,
-                              threaded_chunk_info->udata.chunk_block.length, threaded_chunk_info->chunk) < 0))
+                                          H5FD_MEM_DRAW, threaded_chunk_info->udata.chunk_block.offset,
+                                          threaded_chunk_info->udata.chunk_block.length,
+                                          threaded_chunk_info->chunk) < 0))
         HGOTO_ERROR(H5E_IO, H5E_READERROR, FAIL, "unable to read raw data chunk");
 
     /* Unlock internal mutex */
@@ -3713,7 +3723,8 @@ done:
 
     /* Handle failures */
     if (H5_UNLIKELY(ret_value < 0)) {
-        /* Set failed again in case something failed in the cond_signal block. This is best effort, it's possible at this point for the main thread to race ahead and not see the failure. */
+        /* Set failed again in case something failed in the cond_signal block. This is best effort, it's
+         * possible at this point for the main thread to race ahead and not see the failure. */
         threaded_chunk_info->threaded_io_info->failed = true;
 
         /* Clean up */
