@@ -41,6 +41,7 @@ extern "C" {
 
 /* HDF5 global thread pool routines */
 
+#ifdef H5_HAVE_CONCURRENCY
 /**
  * \ingroup H5TS
  *
@@ -92,6 +93,7 @@ extern "C" {
  *
  */
 H5_DLL herr_t H5TSset_internal_threads(unsigned num_threads);
+#endif /* H5_HAVE_CONCURRENCY */
 
 #ifdef __cplusplus
 }
