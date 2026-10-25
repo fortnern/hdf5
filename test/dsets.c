@@ -397,9 +397,8 @@ static size_t filter_non_threadsafe(unsigned int flags, size_t cd_nelmts, const 
                                     size_t nbytes, size_t *buf_size, void **buf);
 static size_t filter_reenter_h5(unsigned int flags, size_t cd_nelmts, const unsigned int *cd_values,
                                 size_t nbytes, size_t *buf_size, void **buf);
-static size_t filter_fail(unsigned int flags, size_t cd_nelmts, const unsigned int *cd_values,
-                          size_t nbytes, size_t *buf_size, void **buf);
-
+static size_t filter_fail(unsigned int flags, size_t cd_nelmts, const unsigned int *cd_values, size_t nbytes,
+                          size_t *buf_size, void **buf);
 
 static herr_t dsets_h5zregister_direct(const H5Z_class3_t *filter);
 static herr_t dsets_h5zunregister_direct(H5Z_filter_t id);
@@ -21422,13 +21421,13 @@ error:
  */
 /* This message derives from H5Z */
 const H5Z_class3_t H5Z_FAIL[1] = {{
-    H5Z_CLASS_T_VERS_3,      /* H5Z_class_t version */
-    H5Z_FILTER_FAIL,         /* Filter id number */
-    1, 1,                    /* Encoding and decoding enabled */
-    "fail",                  /* Filter name for debugging */
-    NULL,                    /* The "can apply" callback */
-    NULL,                    /* The "set local" callback */
-    filter_fail,             /* The actual filter function */
+    H5Z_CLASS_T_VERS_3,          /* H5Z_class_t version */
+    H5Z_FILTER_FAIL,             /* Filter id number */
+    1, 1,                        /* Encoding and decoding enabled */
+    "fail",                      /* Filter name for debugging */
+    NULL,                        /* The "can apply" callback */
+    NULL,                        /* The "set local" callback */
+    filter_fail,                 /* The actual filter function */
     H5Z_FEAT_FILTER_NO_H5_CALLS, /* This filter is not thread-safe and does not re-enter the HDF5 API */
 }};
 
@@ -21436,8 +21435,8 @@ bool filter_fail_g = false;
 
 static size_t
 filter_fail(unsigned int H5_ATTR_UNUSED flags, size_t H5_ATTR_UNUSED cd_nelmts,
-                    const unsigned int H5_ATTR_UNUSED *cd_values, size_t nbytes,
-                    size_t H5_ATTR_UNUSED *buf_size, void H5_ATTR_UNUSED **buf)
+            const unsigned int H5_ATTR_UNUSED *cd_values, size_t nbytes, size_t H5_ATTR_UNUSED *buf_size,
+            void H5_ATTR_UNUSED **buf)
 {
     /* Fail if requested */
     if (filter_fail_g)
@@ -21463,10 +21462,11 @@ static herr_t
 test_filter_fail(hid_t fapl)
 {
     char  filename[FILENAME_BUF_SIZE] = "";
-    hid_t file = H5I_INVALID_HID, dataset = H5I_INVALID_HID, dcpl = H5I_INVALID_HID, dapl = H5I_INVALID_HID, space = H5I_INVALID_HID, my_fapl = H5I_INVALID_HID;
-    int   i, j, n = 0;
+    hid_t file = H5I_INVALID_HID, dataset = H5I_INVALID_HID, dcpl = H5I_INVALID_HID, dapl = H5I_INVALID_HID,
+          space = H5I_INVALID_HID, my_fapl = H5I_INVALID_HID;
+    int     i, j, n = 0;
     hsize_t dims[2], cdims[2];
-    herr_t ret;
+    herr_t  ret;
 
     TESTING("filter failures are handled cleanly");
 
@@ -21494,8 +21494,9 @@ test_filter_fail(hid_t fapl)
     if (H5Pset_chunk(dcpl, 2, cdims) < 0)
         TEST_ERROR;
 
-    /* Enable chunk cache on dapl (it is disabled on fapl, so the default dapl will have its cache disabled) */
-    if (H5Pset_chunk_cache(dapl, 8191, 8*1024*1024, 0.75) < 0)
+    /* Enable chunk cache on dapl (it is disabled on fapl, so the default dapl will have its cache disabled)
+     */
+    if (H5Pset_chunk_cache(dapl, 8191, 8 * 1024 * 1024, 0.75) < 0)
         TEST_ERROR;
 
     /* Register and apply "fail" filter */
@@ -21515,9 +21516,11 @@ test_filter_fail(hid_t fapl)
 
     /* Write the data to the dataset. Should fail. */
     filter_fail_g = true;
-    H5E_BEGIN_TRY {
+    H5E_BEGIN_TRY
+    {
         ret = H5Dwrite(dataset, H5T_NATIVE_INT, H5S_ALL, H5S_ALL, H5P_DEFAULT, points_data);
-    } H5E_END_TRY;
+    }
+    H5E_END_TRY;
     if (ret >= 0)
         TEST_ERROR;
 
@@ -21528,9 +21531,11 @@ test_filter_fail(hid_t fapl)
 
     /* Read the dataset back. Should fail. */
     filter_fail_g = true;
-    H5E_BEGIN_TRY {
+    H5E_BEGIN_TRY
+    {
         ret = H5Dread(dataset, H5T_NATIVE_INT, H5S_ALL, H5S_ALL, H5P_DEFAULT, check_data);
-    } H5E_END_TRY;
+    }
+    H5E_END_TRY;
     if (ret >= 0)
         TEST_ERROR;
 
@@ -21572,9 +21577,11 @@ test_filter_fail(hid_t fapl)
 
     /* Close dataset. Should fail. Unfortunately the ID will be gone even though the close fails. */
     filter_fail_g = true;
-    H5E_BEGIN_TRY {
+    H5E_BEGIN_TRY
+    {
         ret = H5Dclose(dataset);
-    } H5E_END_TRY;
+    }
+    H5E_END_TRY;
     dataset = H5I_INVALID_HID;
     if (ret >= 0) {
         TEST_ERROR;
@@ -21615,11 +21622,13 @@ test_filter_fail(hid_t fapl)
 
     /* Close file. Should fail. Unfortunately the ID will be gone even though the close fails. */
     filter_fail_g = true;
-    H5E_BEGIN_TRY {
+    H5E_BEGIN_TRY
+    {
         ret = H5Fclose(file);
-    } H5E_END_TRY;
+    }
+    H5E_END_TRY;
     dataset = H5I_INVALID_HID;
-    file = H5I_INVALID_HID;
+    file    = H5I_INVALID_HID;
     if (ret >= 0) {
         TEST_ERROR;
     }
