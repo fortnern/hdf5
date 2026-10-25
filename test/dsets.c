@@ -88,6 +88,7 @@ static const char *FILENAME[] = {"dataset",              /* 0 */
                                  "size_of_sizes",        /* 36 */
                                  "scaleoffset_fullprec", /* 37 */
                                  "scaleoffset_fp_flt",   /* 38 */
+                                 "filter_fail",          /* 39 */
                                  NULL};
 
 #define OHMIN_FILENAME_A "ohdr_min_a"
@@ -218,6 +219,7 @@ static const char *FILENAME[] = {"dataset",              /* 0 */
 #define H5Z_FILTER_NON_THREADSAFE_LIE  320
 #define H5Z_FILTER_NON_THREADSAFE_LIE2 321
 #define H5Z_FILTER_REENTER_H5          322
+#define H5Z_FILTER_FAIL                323
 
 /* Flags for testing filters */
 #define DISABLE_FLETCHER32 0
@@ -395,6 +397,9 @@ static size_t filter_non_threadsafe(unsigned int flags, size_t cd_nelmts, const 
                                     size_t nbytes, size_t *buf_size, void **buf);
 static size_t filter_reenter_h5(unsigned int flags, size_t cd_nelmts, const unsigned int *cd_values,
                                 size_t nbytes, size_t *buf_size, void **buf);
+static size_t filter_fail(unsigned int flags, size_t cd_nelmts, const unsigned int *cd_values,
+                          size_t nbytes, size_t *buf_size, void **buf);
+
 
 static herr_t dsets_h5zregister_direct(const H5Z_class3_t *filter);
 static herr_t dsets_h5zunregister_direct(H5Z_filter_t id);
@@ -21407,6 +21412,251 @@ error:
 #endif /* H5_HAVE_THREADS */
 
 /*-------------------------------------------------------------------------
+ * Function:    filter_fail
+ *
+ * Purpose:     Filter that always fails if a global is set
+ *
+ * Return:      Success:        Data chunk size
+ *              Failure:        0
+ *-------------------------------------------------------------------------
+ */
+/* This message derives from H5Z */
+const H5Z_class3_t H5Z_FAIL[1] = {{
+    H5Z_CLASS_T_VERS_3,      /* H5Z_class_t version */
+    H5Z_FILTER_FAIL,         /* Filter id number */
+    1, 1,                    /* Encoding and decoding enabled */
+    "fail",                  /* Filter name for debugging */
+    NULL,                    /* The "can apply" callback */
+    NULL,                    /* The "set local" callback */
+    filter_fail,             /* The actual filter function */
+    H5Z_FEAT_FILTER_NO_H5_CALLS, /* This filter is not thread-safe and does not re-enter the HDF5 API */
+}};
+
+bool filter_fail_g = false;
+
+static size_t
+filter_fail(unsigned int H5_ATTR_UNUSED flags, size_t H5_ATTR_UNUSED cd_nelmts,
+                    const unsigned int H5_ATTR_UNUSED *cd_values, size_t nbytes,
+                    size_t H5_ATTR_UNUSED *buf_size, void H5_ATTR_UNUSED **buf)
+{
+    /* Fail if requested */
+    if (filter_fail_g)
+        return 0;
+    else
+        return nbytes;
+} /* end filter_fail() */
+
+/*-------------------------------------------------------------------------
+ * Function:    test_filter_fail
+ *
+ * Purpose:     Tests that the library gracefully handles the situation
+ *              when a filter fails.
+ *
+ * Return:      Success:    0
+ *              Failure:    -1
+ *
+ *-------------------------------------------------------------------------
+ */
+#define FAIL_CDIM1 10
+#define FAIL_CDIM2 10
+static herr_t
+test_filter_fail(hid_t fapl)
+{
+    char  filename[FILENAME_BUF_SIZE] = "";
+    hid_t file = H5I_INVALID_HID, dataset = H5I_INVALID_HID, dcpl = H5I_INVALID_HID, dapl = H5I_INVALID_HID, space = H5I_INVALID_HID, my_fapl = H5I_INVALID_HID;
+    int   i, j, n = 0;
+    hsize_t dims[2], cdims[2];
+    herr_t ret;
+
+    TESTING("filter failures are handled cleanly");
+
+    if (NULL == h5_fixname(FILENAME[39], H5P_DEFAULT, filename, sizeof(filename)))
+        TEST_ERROR;
+
+    if ((file = H5Fcreate(filename, H5F_ACC_TRUNC, H5P_DEFAULT, fapl)) < 0)
+        TEST_ERROR;
+
+    /* Create the data space */
+    dims[0] = DSET_DIM1;
+    dims[1] = DSET_DIM2;
+    if ((space = H5Screate_simple(2, dims, NULL)) < 0)
+        TEST_ERROR;
+
+    /* Create DCPL and DAPL */
+    if ((dcpl = H5Pcreate(H5P_DATASET_CREATE)) < 0)
+        TEST_ERROR;
+    if ((dapl = H5Pcreate(H5P_DATASET_ACCESS)) < 0)
+        TEST_ERROR;
+
+    /* Set chunk dimensions */
+    cdims[0] = FAIL_CDIM1;
+    cdims[1] = FAIL_CDIM2;
+    if (H5Pset_chunk(dcpl, 2, cdims) < 0)
+        TEST_ERROR;
+
+    /* Enable chunk cache on dapl (it is disabled on fapl, so the default dapl will have its cache disabled) */
+    if (H5Pset_chunk_cache(dapl, 8191, 8*1024*1024, 0.75) < 0)
+        TEST_ERROR;
+
+    /* Register and apply "fail" filter */
+    if (H5Zregister(H5Z_FAIL) < 0)
+        TEST_ERROR;
+    if (H5Pset_filter(dcpl, H5Z_FILTER_FAIL, H5Z_FLAG_MANDATORY, 0, NULL) < 0)
+        TEST_ERROR;
+
+    /* Create the fail dataset */
+    if ((dataset = H5Dcreate2(file, "dset_fail", H5T_NATIVE_INT, space, H5P_DEFAULT, dcpl, H5P_DEFAULT)) < 0)
+        TEST_ERROR;
+
+    /* Initialize the write buffer */
+    for (i = 0; i < DSET_DIM1; i++)
+        for (j = 0; j < DSET_DIM2; j++)
+            points[i][j] = n++;
+
+    /* Write the data to the dataset. Should fail. */
+    filter_fail_g = true;
+    H5E_BEGIN_TRY {
+        ret = H5Dwrite(dataset, H5T_NATIVE_INT, H5S_ALL, H5S_ALL, H5P_DEFAULT, points_data);
+    } H5E_END_TRY;
+    if (ret >= 0)
+        TEST_ERROR;
+
+    /* Write the data to the dataset again, succeeding this time */
+    filter_fail_g = false;
+    if (H5Dwrite(dataset, H5T_NATIVE_INT, H5S_ALL, H5S_ALL, H5P_DEFAULT, points_data) < 0)
+        TEST_ERROR;
+
+    /* Read the dataset back. Should fail. */
+    filter_fail_g = true;
+    H5E_BEGIN_TRY {
+        ret = H5Dread(dataset, H5T_NATIVE_INT, H5S_ALL, H5S_ALL, H5P_DEFAULT, check_data);
+    } H5E_END_TRY;
+    if (ret >= 0)
+        TEST_ERROR;
+
+    /* Read the dataset again, succeeding this time */
+    filter_fail_g = false;
+    if (H5Dread(dataset, H5T_NATIVE_INT, H5S_ALL, H5S_ALL, H5P_DEFAULT, check_data) < 0)
+        TEST_ERROR;
+
+    /* Check that the values read are the same as the values written */
+    for (i = 0; i < DSET_DIM1; i++) {
+        for (j = 0; j < DSET_DIM2; j++) {
+            if (points[i][j] != check[i][j]) {
+                H5_FAILED();
+                printf("    Read different values than written.\n");
+                printf("    At index %d,%d\n", i, j);
+                goto error;
+            }
+        }
+    }
+
+    /* Close dataset */
+    if (H5Dclose(dataset) < 0)
+        TEST_ERROR;
+    dataset = H5I_INVALID_HID;
+
+    /* Repen dataset with chunk cache enabled */
+    if ((dataset = H5Dopen2(file, "dset_fail", dapl)) < 0)
+        TEST_ERROR;
+
+    /* Initialize the write buffer */
+    for (i = 0; i < DSET_DIM1; i++)
+        for (j = 0; j < DSET_DIM2; j++)
+            points[i][j] = n++;
+
+    /* Write the data to the dataset */
+    filter_fail_g = false;
+    if (H5Dwrite(dataset, H5T_NATIVE_INT, H5S_ALL, H5S_ALL, H5P_DEFAULT, points_data) < 0)
+        TEST_ERROR;
+
+    /* Close dataset. Should fail. Unfortunately the ID will be gone even though the close fails. */
+    filter_fail_g = true;
+    H5E_BEGIN_TRY {
+        ret = H5Dclose(dataset);
+    } H5E_END_TRY;
+    dataset = H5I_INVALID_HID;
+    if (ret >= 0) {
+        TEST_ERROR;
+    }
+
+    /*
+     * Now try closing the file with the dataset still open with a strong close degree
+     */
+
+    /* Close the file */
+    if (H5Fclose(file) < 0)
+        TEST_ERROR;
+    file = H5I_INVALID_HID;
+
+    /* Create FAPL with strong close degree */
+    if ((my_fapl = H5Pcopy(fapl)) < 0)
+        TEST_ERROR;
+    if (H5Pset_fclose_degree(my_fapl, H5F_CLOSE_STRONG) < 0)
+        TEST_ERROR;
+
+    /* Reopen file */
+    if ((file = H5Fopen(filename, H5F_ACC_RDWR, my_fapl)) < 0)
+        TEST_ERROR;
+
+    /* Repen dataset with chunk cache enabled */
+    if ((dataset = H5Dopen2(file, "dset_fail", dapl)) < 0)
+        TEST_ERROR;
+
+    /* Initialize the write buffer */
+    for (i = 0; i < DSET_DIM1; i++)
+        for (j = 0; j < DSET_DIM2; j++)
+            points[i][j] = n++;
+
+    /* Write the data to the dataset */
+    filter_fail_g = false;
+    if (H5Dwrite(dataset, H5T_NATIVE_INT, H5S_ALL, H5S_ALL, H5P_DEFAULT, points_data) < 0)
+        TEST_ERROR;
+
+    /* Close file. Should fail. Unfortunately the ID will be gone even though the close fails. */
+    filter_fail_g = true;
+    H5E_BEGIN_TRY {
+        ret = H5Fclose(file);
+    } H5E_END_TRY;
+    dataset = H5I_INVALID_HID;
+    file = H5I_INVALID_HID;
+    if (ret >= 0) {
+        TEST_ERROR;
+    }
+
+    /* Close */
+    if (H5Pclose(dcpl) < 0)
+        TEST_ERROR;
+    dcpl = H5I_INVALID_HID;
+    if (H5Pclose(dapl) < 0)
+        TEST_ERROR;
+    dapl = H5I_INVALID_HID;
+    if (H5Pclose(my_fapl) < 0)
+        TEST_ERROR;
+    my_fapl = H5I_INVALID_HID;
+    if (H5Sclose(space) < 0)
+        TEST_ERROR;
+    space = H5I_INVALID_HID;
+
+    PASSED();
+
+    return SUCCEED;
+
+error:
+    H5E_BEGIN_TRY
+    {
+        H5Sclose(space);
+        H5Pclose(dcpl);
+        H5Pclose(dapl);
+        H5Pclose(my_fapl);
+        H5Dclose(dataset);
+        H5Fclose(file);
+    }
+    H5E_END_TRY
+    return FAIL;
+} /* end test_filter_fail() */
+
+/*-------------------------------------------------------------------------
  * Function:    main
  *
  * Purpose:     Tests the dataset interface (H5D)
@@ -21622,6 +21872,7 @@ main(void)
                         nerrors += (test_bad_decode_size(file) < 0 ? 1 : 0);
                         nerrors += (test_bad_decode_size_vlen(file) < 0 ? 1 : 0);
                         nerrors += (test_bad_buf_size(file) < 0 ? 1 : 0);
+                        nerrors += (test_filter_fail(fapl) < 0 ? 1 : 0);
 
                         /* This one will also fail because it doesn't detect the expected message in the main
                          * thread's stack (it is printed by the child thread) */
